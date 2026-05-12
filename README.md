@@ -50,7 +50,7 @@ npm run dev
 ```
 .
 ├── backend/
-│   ├── src/
+│   ├── app/
 │   │   ├── api/          # Routes
 │   │   ├── services/     # Business Logic
 │   │   ├── repositories/ # Database Logic

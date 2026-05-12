@@ -1,0 +1,5 @@
+uvicorn
+fastapi
+pymongo
+pytest
+pytest-asyncio

@@ -1,12 +1,9 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-env/
-venv/
-.venv
-ENV/
 build/
 develop-eggs/
 dist/
@@ -19,15 +16,36 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
+
+# Virtual environments
+.venv
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.sublime-workspace
+
+# Environment variables (never commit)
+.env
+.env.local
+.env.*.local
+
+# Testing
 .pytest_cache/
 .coverage
 htmlcov/
-.env
-.env.local
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Pipenv (Pipfile.lock should be committed for reproducible builds)

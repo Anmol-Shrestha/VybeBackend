@@ -1,0 +1,6 @@
+    {
+        "name": "Mr.Vegan",
+        "userID":"user_123123",
+        "dietary": "vegan",
+        "allergen":["nut, dairy, gluten"]
+    }

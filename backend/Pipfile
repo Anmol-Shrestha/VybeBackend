@@ -5,16 +5,14 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
-uvicorn = {extras = ["standard"], version = "*"}
-motor = "*"
-python-dotenv = "*"
+uvicorn = "*"
 pydantic = "*"
-pydantic-settings = "*"
-
-[dev-packages]
+pymongo = {extras = ["asynchronous"], version = "*"}
 pytest = "*"
 pytest-asyncio = "*"
-httpx = "*"
+python-dotenv = "*"
+
+[dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.13"
