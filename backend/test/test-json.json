@@ -1,0 +1,589 @@
+[
+{
+  "name": "Vegan Kitchen",
+  "address_display": "255 Augusta Ave, Toronto, ON M5T 2L8",
+  "description": "A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market.",
+  "latitude": 43.774895787870555, 
+  "longitude": -79.21059363481854,
+
+
+
+  "price_max": 20, 
+  "cuisine": ["Korean", "Fusion", "Street Food"],
+  "dietary": ["vegetarian", "vegan", "regular"],
+  "meal_types": ["brunch", "lunch", "dinner", "late night"],
+  "has_parking": false,
+  "has_live_music": false,
+  "buffet": false,
+  "max_capacity": 20,
+  "service_hours": {
+    "Monday": "12:00 PM – 7:00 PM",
+    "Tuesday": "12:00 PM – 7:00 PM",
+    "Wednesday": "12:00 PM – 7:00 PM",
+    "Thursday": "12:00 PM – 7:00 PM",
+    "Friday": "12:00 PM – 12:00 AM",
+    "Saturday": "12:00 PM – 12:00 AM",
+    "Sunday": "12:00 PM – 12:00 AM"
+  },
+  
+  "ai_metadata": {
+    "atmosphere": ["Casual Hangout", "Quick Bites", "Student Friendly"],
+    "vibe_tags": ["Modern", "Cute", "Casual", "Trendy", "Instagram-friendly"],
+    "best_for": ["Quick grab-and-go", "Food explorers"]
+  }
+},
+{
+  "name": "Purely Vegan Hub",
+  "address_display": "92 Botany, Scarborough, ON M5T 2L8",
+  "description": "A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market.",
+  "latitude": 43.65518646485583, 
+  "longitude": -79.40210001991301,
+  "price_max": 20, 
+  "cuisine": ["american"],
+  "dietary": ["vegan"],
+  "meal_types": ["Brunch", "Lunch", "Dinner", "Late Night"],
+  "has_parking": true,
+  "has_live_music": true,
+  "buffet": false,
+  "max_capacity": 20,
+  "service_hours": {
+  "Monday": { "open": 720, "close": 1140 },
+  "Tuesday": { "open": 720, "close": 1140 },
+  "Wednesday": { "open": 720, "close": 1140 },
+  "Thursday": { "open": 720, "close": 1140 },
+  "Friday": { "open": 720, "close": 1440 },
+  "Saturday": { "open": 720, "close": 1440 },
+  "Sunday": { "open": 720, "close": 1440 }
+  },
+  
+
+
+
+  "ai_metadata": {
+    "atmosphere": ["Casual Hangout", "Quick Bites", "Student Friendly"],
+    "vibe_tags": ["Modern", "Cute", "Casual", "Trendy", "Instagram-friendly"],
+    "best_for": ["Quick grab-and-go", "Food explorers"]
+  }
+},
+{
+    "name": "The Green Leaf Bistro",
+    "address_display": "150 Borough Dr, Scarborough, ON M1P 4P5",
+    "description": "A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site.",
+    "latitude": 43.776220071298795, 
+    "longitude": -79.21022405482587,
+    "price_max": 20, 
+    "cuisine": ["italian"],
+    "dietary": ["vegetarian"],
+    "meal_types": ["Lunch", "Dinner"],
+    "has_parking": true,
+    "has_live_music": true,
+    "buffet": false,
+    "max_capacity": 45,
+    "service_hours": {
+      "Monday": "11:00 AM – 9:00 PM",
+      "Tuesday": "11:00 AM – 9:00 PM",
+      "Wednesday": "11:00 AM – 9:00 PM",
+      "Thursday": "11:00 AM – 9:00 PM",
+      "Friday": "11:00 AM – 10:00 PM",
+      "Saturday": "11:00 AM – 10:00 PM",
+      "Sunday": "12:00 PM – 8:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Quiet", "Eco-friendly", "Healthy"],
+      "vibe_tags": ["Natural", "Bright", "Casual"],
+      "best_for": ["Lunch dates", "Vegetarian foodies"]
+    }
+},
+{
+    "name": "Standard Grill & Bar",
+    "address_display": "300 Borough Dr, Scarborough, ON M1P 4P5",
+    "description": "A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions.",
+    "latitude": 43.7774925226131, 
+    "longitude": -79.21085921184027,
+    "price_max": 20, 
+    "cuisine": ["american"],
+    "dietary": ["regular"],
+    "meal_types": ["Dinner", "Late Night"],
+    "has_parking": true,
+    "has_live_music": true,
+    "buffet": false,
+    "max_capacity": 100,
+    "service_hours": {
+      "Monday": "4:00 PM – 12:00 AM",
+      "Tuesday": "4:00 PM – 12:00 AM",
+      "Wednesday": "4:00 PM – 12:00 AM",
+      "Thursday": "4:00 PM – 12:00 AM",
+      "Friday": "4:00 PM – 2:00 AM",
+      "Saturday": "4:00 PM – 2:00 AM",
+      "Sunday": "4:00 PM – 11:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Loud", "Lively", "Sports"],
+      "vibe_tags": ["Classic", "Dimly Lit", "Social"],
+      "best_for": ["Night out", "Meat lovers"]
+    }
+},
+{
+    "name": "Sultan’s Halal Kitchen",
+    "address_display": "2500 Lawrence Ave E, Scarborough, ON M1P 2R7",
+    "description": "Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy.",
+    "latitude": 43.77529374753092, 
+    "longitude": -79.21493294080501,
+    "price_max": 30, 
+    "cuisine": ["middle eastern"],
+    "dietary": ["halal"],
+    "meal_types": ["lunch", "dinner"],
+    "has_parking": true,
+    "has_live_music": false,
+    "buffet": true,
+    "max_capacity": 60,
+    "service_hours": {
+      "Monday": "11:00 AM – 11:00 PM",
+      "Tuesday": "11:00 AM – 11:00 PM",
+      "Wednesday": "11:00 AM – 11:00 PM",
+      "Thursday": "11:00 AM – 11:00 PM",
+      "Friday": "11:00 AM – 12:00 AM",
+      "Saturday": "11:00 AM – 12:00 AM",
+      "Sunday": "11:00 AM – 10:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Family Oriented", "Welcoming", "Busy"],
+      "vibe_tags": ["Traditional", "Authentic"],
+      "best_for": ["Group dinners", "Halal certified meals"]
+    }
+},
+{
+    "name": "The Kosher Deli",
+    "address_display": "Bathurst St, North York, ON M3H 3R1",
+    "description": "Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food.",
+    "latitude": 43.77799885848608, 
+    "longitude": -79.21422708386274,
+    "price_max": 30,
+    "cuisine": ["jewish", "deli"],
+    "dietary": ["kosher"],
+    "meal_types": ["brunch", "lunch"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 25,
+    "service_hours": {
+      "Monday": "8:00 AM – 4:00 PM",
+      "Tuesday": "8:00 AM – 4:00 PM",
+      "Wednesday": "8:00 AM – 4:00 PM",
+      "Thursday": "8:00 AM – 4:00 PM",
+      "Friday": "8:00 AM – 2:00 PM",
+      "Saturday": "Closed",
+      "Sunday": "9:00 AM – 5:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Quiet", "Nostalgic"],
+      "vibe_tags": ["Old-school", "Cozy"],
+      "best_for": ["Traditional brunch", "Kosher observance"]
+    }
+},
+{
+    "name": "Sky & Stars Rooftop Lounge",
+    "address_display": "500 King St W, Toronto, ON M5H 2Y2",
+    "description": "Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine.",
+    "latitude": 43.6424,
+    "longitude": -79.3957,
+    "price_max": 50,
+    "cuisine": ["contemporary"],
+    "dietary": ["regular", "vegetarian", "gluten free"],
+    "meal_types": ["dinner", "late night"],
+    "has_parking": true,
+    "has_live_music": true,
+    "buffet": false,
+    "max_capacity": 75,
+    "service_hours": {
+      "Monday": "5:00 PM – 11:00 PM",
+      "Tuesday": "5:00 PM – 11:00 PM",
+      "Wednesday": "5:00 PM – 11:00 PM",
+      "Thursday": "5:00 PM – 12:00 AM",
+      "Friday": "5:00 PM – 2:00 AM",
+      "Saturday": "6:00 PM – 2:00 AM",
+      "Sunday": "5:00 PM – 10:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Romantic", "Upscale", "Views"],
+      "vibe_tags": ["Elegant", "Modern", "Instagram-worthy"],
+      "best_for": ["Date night", "Special occasions", "Cocktail hour"]
+    }
+},
+{
+    "name": "The Cozy Study Cafe",
+    "address_display": "45 Harbord St, Toronto, ON M5S 1G4",
+    "description": "Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee.",
+    "latitude": 43.6629,
+    "longitude": -79.4024,
+    "price_max": 15,
+    "cuisine": ["cafe", "light fare"],
+    "dietary": ["vegan", "vegetarian", "regular"],
+    "meal_types": ["breakfast", "brunch", "lunch"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 35,
+    "service_hours": {
+      "Monday": { "open": 480, "close": 1260 },
+      "Tuesday": { "open": 480, "close": 1260 },
+      "Wednesday": { "open": 480, "close": 1260 },
+      "Thursday": { "open": 480, "close": 1260 },
+      "Friday": { "open": 480, "close": 1380 },
+      "Saturday": { "open": 540, "close": 1380 },
+      "Sunday": { "open": 540, "close": 1260 }
+    },
+    "ai_metadata": {
+      "atmosphere": ["Quiet", "Productive", "Cozy"],
+      "vibe_tags": ["Bookish", "Minimalist", "Indie"],
+      "best_for": ["Remote work", "Study sessions", "Quiet hangouts"]
+    }
+},
+{
+    "name": "Sunday Brunch House",
+    "address_display": "320 Bloor St W, Toronto, ON M5S 1W5",
+    "description": "Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere.",
+    "latitude": 43.6684,
+    "longitude": -79.4011,
+    "price_max": 25,
+    "cuisine": ["brunch", "american"],
+    "dietary": ["vegetarian", "regular"],
+    "meal_types": ["brunch", "lunch"],
+    "has_parking": true,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 60,
+    "service_hours": {
+      "Monday": "11:00 AM – 3:00 PM",
+      "Tuesday": "11:00 AM – 3:00 PM",
+      "Wednesday": "11:00 AM – 3:00 PM",
+      "Thursday": "11:00 AM – 3:00 PM",
+      "Friday": "10:00 AM – 10:00 PM",
+      "Saturday": "9:00 AM – 10:00 PM",
+      "Sunday": "9:00 AM – 5:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Bright", "Family Friendly", "Cheerful"],
+      "vibe_tags": ["Casual", "Wholesome", "Instagram-friendly"],
+      "best_for": ["Weekend brunch", "Family gatherings", "Breakfast lovers"]
+    }
+},
+{
+    "name": "Spice & Rhythm Indian Kitchen",
+    "address_display": "345 Bathurst St, Toronto, ON M5T 2R8",
+    "description": "Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties.",
+    "latitude": 43.6607,
+    "longitude": -79.3961,
+    "price_max": 30,
+    "cuisine": ["indian"],
+    "dietary": ["vegetarian", "vegan", "regular"],
+    "meal_types": ["lunch", "dinner", "late night"],
+    "has_parking": false,
+    "has_live_music": true,
+    "buffet": true,
+    "max_capacity": 90,
+    "service_hours": {
+      "Monday": "11:00 AM – 11:00 PM",
+      "Tuesday": "11:00 AM – 11:00 PM",
+      "Wednesday": "11:00 AM – 11:00 PM",
+      "Thursday": "11:00 AM – 11:00 PM",
+      "Friday": "11:00 AM – 12:00 AM",
+      "Saturday": "11:00 AM – 12:00 AM",
+      "Sunday": "11:00 AM – 10:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Lively", "Authentic", "Festive"],
+      "vibe_tags": ["Colorful", "Musical", "Aromatic"],
+      "best_for": ["Group dinners", "Cultural experience", "Live music lovers"]
+    }
+},
+{
+    "name": "The Night Owl Diner",
+    "address_display": "150 Dundas St W, Toronto, ON M5G 1C3",
+    "description": "Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers.",
+    "latitude": 43.6629,
+    "longitude": -79.3865,
+    "price_max": 18,
+    "cuisine": ["american", "comfort food"],
+    "dietary": ["regular", "vegetarian"],
+    "meal_types": ["breakfast", "lunch", "dinner", "late night"],
+    "has_parking": true,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 50,
+    "service_hours": {
+      "Monday": { "open": 0, "close": 1440 },
+      "Tuesday": { "open": 0, "close": 1440 },
+      "Wednesday": { "open": 0, "close": 1440 },
+      "Thursday": { "open": 0, "close": 1440 },
+      "Friday": { "open": 0, "close": 1440 },
+      "Saturday": { "open": 0, "close": 1440 },
+      "Sunday": { "open": 0, "close": 1440 }
+    },
+    "ai_metadata": {
+      "atmosphere": ["Retro", "Always Open", "Nostalgic"],
+      "vibe_tags": ["Classic Diner", "Comfort", "No-frills"],
+      "best_for": ["Late night cravings", "After-party bites", "Nightshift workers"]
+    }
+},
+{
+    "name": "Green Garden Bistro",
+    "address_display": "789 Queen St W, Toronto, ON M6J 1G3",
+    "description": "100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout.",
+    "latitude": 43.6439,
+    "longitude": -79.4037,
+    "price_max": 40,
+    "cuisine": ["vegan", "contemporary"],
+    "dietary": ["vegan"],
+    "meal_types": ["lunch", "dinner"],
+    "has_parking": false,
+    "has_live_music": true,
+    "buffet": false,
+    "max_capacity": 45,
+    "service_hours": {
+      "Monday": "Closed",
+      "Tuesday": "5:00 PM – 10:00 PM",
+      "Wednesday": "5:00 PM – 10:00 PM",
+      "Thursday": "5:00 PM – 11:00 PM",
+      "Friday": "5:00 PM – 12:00 AM",
+      "Saturday": "11:00 AM – 12:00 AM",
+      "Sunday": "11:00 AM – 9:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Eco-conscious", "Trendy", "Artistic"],
+      "vibe_tags": ["Sustainable", "Hip", "Modern"],
+      "best_for": ["Vegan foodies", "Eco-warriors", "Special dietary needs"]
+    }
+},
+{
+    "name": "Family Feast Pizzeria",
+    "address_display": "200 College St, Toronto, ON M5T 1R4",
+    "description": "Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations.",
+    "latitude": 43.6629,
+    "longitude": -79.3994,
+    "price_max": 25,
+    "cuisine": ["italian", "pizza"],
+    "dietary": ["vegetarian", "regular"],
+    "meal_types": ["lunch", "dinner"],
+    "has_parking": true,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 120,
+    "service_hours": {
+      "Monday": "11:00 AM – 11:00 PM",
+      "Tuesday": "11:00 AM – 11:00 PM",
+      "Wednesday": "11:00 AM – 11:00 PM",
+      "Thursday": "11:00 AM – 11:00 PM",
+      "Friday": "11:00 AM – 12:00 AM",
+      "Saturday": "11:00 AM – 12:00 AM",
+      "Sunday": "11:00 AM – 10:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Warm", "Family Oriented", "Spacious"],
+      "vibe_tags": ["Rustic", "Convivial", "Busy"],
+      "best_for": ["Family dinners", "Birthday parties", "Group celebrations"]
+    }
+},
+{
+    "name": "The Sushi Master",
+    "address_display": "456 Spadina Ave, Toronto, ON M5T 2G8",
+    "description": "High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating.",
+    "latitude": 43.6598,
+    "longitude": -79.3994,
+    "price_max": 80,
+    "cuisine": ["japanese", "sushi"],
+    "dietary": ["regular"],
+    "meal_types": ["dinner", "late night"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 20,
+    "service_hours": {
+      "Monday": "Closed",
+      "Tuesday": "5:00 PM – 11:00 PM",
+      "Wednesday": "5:00 PM – 11:00 PM",
+      "Thursday": "5:00 PM – 11:00 PM",
+      "Friday": "5:00 PM – 12:00 AM",
+      "Saturday": "5:00 PM – 12:00 AM",
+      "Sunday": "5:00 PM – 10:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Intimate", "Upscale", "Authentic"],
+      "vibe_tags": ["Sophisticated", "Minimalist", "Exquisite"],
+      "best_for": ["Special occasions", "Food connoisseurs", "Romantic dinners"]
+    }
+},
+{
+    "name": "Street Tacos Express",
+    "address_display": "123 Ossington Ave, Toronto, ON M5T 1A8",
+    "description": "Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break.",
+    "latitude": 43.6520,
+    "longitude": -79.4126,
+    "price_max": 12,
+    "cuisine": ["mexican", "street food"],
+    "dietary": ["vegetarian", "regular"],
+    "meal_types": ["lunch", "dinner"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 25,
+    "service_hours": {
+      "Monday": { "open": 660, "close": 1140 },
+      "Tuesday": { "open": 660, "close": 1140 },
+      "Wednesday": { "open": 660, "close": 1140 },
+      "Thursday": { "open": 660, "close": 1140 },
+      "Friday": { "open": 660, "close": 1260 },
+      "Saturday": { "open": 720, "close": 1260 },
+      "Sunday": { "open": 720, "close": 1080 }
+    },
+    "ai_metadata": {
+      "atmosphere": ["Casual", "Quick", "Authentic"],
+      "vibe_tags": ["Street-style", "Vibrant", "Budget-friendly"],
+      "best_for": ["Quick lunch", "Food lovers", "Budget meals"]
+    }
+},
+{
+    "name": "The Gluten-Free Haven",
+    "address_display": "678 Bathurst St, Toronto, ON M5T 2R8",
+    "description": "Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated.",
+    "latitude": 43.6607,
+    "longitude": -79.3961,
+    "price_max": 22,
+    "cuisine": ["gluten free", "bakery", "cafe"],
+    "dietary": ["gluten free", "vegetarian"],
+    "meal_types": ["breakfast", "brunch", "lunch"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 30,
+    "service_hours": {
+      "Monday": "7:00 AM – 5:00 PM",
+      "Tuesday": "7:00 AM – 5:00 PM",
+      "Wednesday": "7:00 AM – 5:00 PM",
+      "Thursday": "7:00 AM – 5:00 PM",
+      "Friday": "7:00 AM – 6:00 PM",
+      "Saturday": "8:00 AM – 6:00 PM",
+      "Sunday": "9:00 AM – 4:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Safe", "Welcoming", "Health-conscious"],
+      "vibe_tags": ["Specialized", "Certified", "Caring"],
+      "best_for": ["Celiac community", "Gluten-sensitive diets", "Safe dining"]
+    }
+},
+{
+    "name": "The Jazz Corner Bar & Grill",
+    "address_display": "312 King St E, Toronto, ON M5A 1J5",
+    "description": "Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers.",
+    "latitude": 43.6527,
+    "longitude": -79.3795,
+    "price_max": 45,
+    "cuisine": ["contemporary", "bar food"],
+    "dietary": ["regular", "vegetarian"],
+    "meal_types": ["dinner", "late night"],
+    "has_parking": true,
+    "has_live_music": true,
+    "buffet": false,
+    "max_capacity": 85,
+    "service_hours": {
+      "Monday": "5:00 PM – 1:00 AM",
+      "Tuesday": "5:00 PM – 1:00 AM",
+      "Wednesday": "5:00 PM – 1:00 AM",
+      "Thursday": "5:00 PM – 2:00 AM",
+      "Friday": "5:00 PM – 3:00 AM",
+      "Saturday": "6:00 PM – 3:00 AM",
+      "Sunday": "6:00 PM – 12:00 AM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Intimate", "Musical", "Sophisticated"],
+      "vibe_tags": ["Live Jazz", "Classy", "Atmospheric"],
+      "best_for": ["Live music nights", "Date nights", "Cocktail enthusiasts"]
+    }
+},
+{
+    "name": "Bubble Tea Paradise",
+    "address_display": "555 Yonge St, Toronto, ON M4Y 1Z3",
+    "description": "Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot.",
+    "latitude": 43.6629,
+    "longitude": -79.3807,
+    "price_max": 8,
+    "cuisine": ["beverages", "dessert"],
+    "dietary": ["vegan", "vegetarian", "regular"],
+    "meal_types": ["breakfast", "lunch", "afternoon snack"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 40,
+    "service_hours": {
+      "Monday": { "open": 480, "close": 1260 },
+      "Tuesday": { "open": 480, "close": 1260 },
+      "Wednesday": { "open": 480, "close": 1260 },
+      "Thursday": { "open": 480, "close": 1260 },
+      "Friday": { "open": 480, "close": 1380 },
+      "Saturday": { "open": 540, "close": 1380 },
+      "Sunday": { "open": 540, "close": 1260 }
+    },
+    "ai_metadata": {
+      "atmosphere": ["Trendy", "Young", "Social"],
+      "vibe_tags": ["Instagram-friendly", "Sweet", "Modern"],
+      "best_for": ["Bubble tea lovers", "Meetups", "Students"]
+    }
+},
+{
+    "name": "The Steakhouse Prime",
+    "address_display": "250 Adelaide St W, Toronto, ON M5H 1Y6",
+    "description": "Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar.",
+    "latitude": 43.6465,
+    "longitude": -79.3832,
+    "price_max": 100,
+    "cuisine": ["steakhouse", "fine dining"],
+    "dietary": ["regular"],
+    "meal_types": ["dinner"],
+    "has_parking": true,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 65,
+    "service_hours": {
+      "Monday": "Closed",
+      "Tuesday": "5:00 PM – 10:00 PM",
+      "Wednesday": "5:00 PM – 10:00 PM",
+      "Thursday": "5:00 PM – 10:00 PM",
+      "Friday": "5:00 PM – 11:00 PM",
+      "Saturday": "5:00 PM – 11:00 PM",
+      "Sunday": "5:00 PM – 9:00 PM"
+    },
+    "ai_metadata": {
+      "atmosphere": ["Upscale", "Sophisticated", "Exclusive"],
+      "vibe_tags": ["Luxurious", "Classic", "Refined"],
+      "best_for": ["Business dinners", "Celebrations", "Steak connoisseurs"]
+    }
+},
+{
+    "name": "Tropical Smoothie Bowl Café",
+    "address_display": "111 Queen St W, Toronto, ON M5H 2N6",
+    "description": "Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu.",
+    "latitude": 43.6428,
+    "longitude": -79.3871,
+    "price_max": 14,
+    "cuisine": ["healthy", "smoothies", "bowls"],
+    "dietary": ["vegan", "vegetarian", "gluten free"],
+    "meal_types": ["breakfast", "brunch"],
+    "has_parking": false,
+    "has_live_music": false,
+    "buffet": false,
+    "max_capacity": 35,
+    "service_hours": {
+      "Monday": { "open": 540, "close": 1080 },
+      "Tuesday": { "open": 540, "close": 1080 },
+      "Wednesday": { "open": 540, "close": 1080 },
+      "Thursday": { "open": 540, "close": 1080 },
+      "Friday": { "open": 540, "close": 1200 },
+      "Saturday": { "open": 600, "close": 1200 },
+      "Sunday": { "open": 600, "close": 1080 }
+    },
+    "ai_metadata": {
+      "atmosphere": ["Bright", "Health-focused", "Casual"],
+      "vibe_tags": ["Wellness", "Colorful", "Energetic"],
+      "best_for": ["Fitness enthusiasts", "Healthy eaters", "Morning workouts"]
+    }
+}]

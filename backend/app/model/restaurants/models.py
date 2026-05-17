@@ -30,32 +30,12 @@ class RestaurantEntity(BaseModel):
 
     ai_metadata: Dict[str, List[str]] = Field(default_factory=dict)
 
+    # OpenAI's text-embedding-3-small outputs 1536 dimensions by default
+    vector_embeddings: Optional[List[float]] = Field(
+        default=None, 
+        description="1536-dimensional semantic vector representing the restaurant's vibe and description"
+    )
 
-class RestaurantCreateRequest(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=10, max_length=500)
-    
-    # We take lat/long directly from the "Client" or your Geocoding Adapter
-    latitude: float = Field(..., ge=-90, le=90)
-    longitude: float = Field(..., ge=-180, le=180)
-    
-    # Your Disciplined Integer approach
-    price_level: int = Field(..., ge=1, le=4, description="1=$, 2=$$, 3=$$$, 4=$$$$")
-    
-    # Attributes for your Boolean columns/filters
-    cuisine: List[str]
-    dietary: List[str]
-    meal_types: List[str]
-    
-    # Individual Booleans (Amenities)
-    has_parking: bool = False
-    has_live_music: bool = False
-    buffet: bool = False
-    max_capacity: int = Field(..., gt=0)
-    
-    # For display
-    address_display: str = Field(..., description="The human-readable address")
-    service_hours: Dict[str, str] = Field(..., description="Service hours by day")
 
 
 
@@ -88,10 +68,12 @@ class RestaurantSearchRequest(BaseModel):
 class RestaurantsSearchResponse(BaseModel):
     restaurant_id: str
     name: str
+    latitude: float
+    longitude: float
     distance_km: float
     is_open: bool
     is_online: bool = True  # Placeholder for your business logic
-    
+
     dietary: List[str]
     cuisine: List[str]
     meal_types: List[str]
@@ -108,6 +90,8 @@ class RestaurantsSearchResponse(BaseModel):
         return cls(
             restaurant_id=entity.restaurant_id,
             name=entity.name,
+            latitude=entity.location.coordinates[1],
+            longitude=entity.location.coordinates[0],
             distance_km=round(distance, 2),
             is_open=is_open,
             dietary=entity.dietary,

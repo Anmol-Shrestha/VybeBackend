@@ -1,0 +1,65 @@
+
+
+We are implementing an enterprise-grade Agentic RAG pipeline using the Service-Layer, Repository, and Adapter patterns in Python. Please generate the code step-by-step based on the blueprint above. Ensure the repository functions are completely atomic, the Embedding and Re-ranker models live in independent Adapter classes, and the CrewAI orchestration is encapsulated inside its own dedicated Orchestrator Service to keep our main system layer decoupled.
+
+requirement_pipeline/
+│
+├── __init__.py
+├── contracts.py       # Pydantic Request (Bus) and Response Models
+├── adapters.py        # Embedding, Re-ranker, and LLM Synthesis Adapters
+├── repository.py      # MongoRestaurantRepository (Atomic $vectorSearch)
+├── orchestrator.py    # RestaurantAgentOrchestrator (CrewAI Agents & Tasks)
+└── service.py         # RestaurantService (The Entry Gate/Front Door)
+
+
+Here is the concise execution blueprint for your Requirement-Based Query Processing Pipeline.
+
+
+List of restaurant id:
+
+"restaurant_1","restaurant_2","restaurant_3"
+query: "restaurant for late night"
+
+Expected Output: there is only one restaurant open 24 hour.
+
+
+The Concise Data Lifecycle
+
+    API Endpoint Gate
+
+        The client hits /restaurants/chat with a RequirementHybridSearchRequest carrying the text query + a list of restaurant_ids.
+
+        The controller performs Pydantic validation and passes the payload directly to the RestaurantService.
+
+    The Orchestration Trigger
+
+        RestaurantService receives the request and immediately invokes your dedicated RestaurantAgentOrchestrator service class, passing the raw string variables.
+
+        answer = await agent_orchestrator.run_pipeline(query, restaurant_ids)
+
+    CrewAI Routing (The Intent Gate)
+
+        The orchestrator boots up the Multi-Agent Crew using a strict sequential workflow.
+
+        Agent 1 (Intent Classifier): Analyzes the raw text to verify the request is an experiential search, then routes the context forward to the next task.
+
+    The Tool Execution Bubble (Micro-Service Layer)
+
+        Agent 2 (Requirements Agent): Detects qualitative vibes in the text and triggers the ID-Bounded Search Tool, passing it the query text and the restaurant_ids array.
+
+        Inside the Tool (Sequential Business Logic):
+
+            A. Embedding Adapter: Converts the text string into a mathematical coordinate array vector.
+
+            B. Mongo Repository: Executes .vector_search_within_ids(), running an Atlas $vectorSearch query restricted strictly to the passed restaurant_ids.
+
+            C. Re-ranker Adapter: Intercepts the top 20 raw results from MongoDB and runs cross-encoder sorting, slicing it down to the absolute best 5 precision matches.
+
+            D. Serialization: Converts those 5 clean entities into plain text prose and hands them back to the crew.
+
+    Synthesis & Response Packaging
+
+        Agent 3 (Answer Generator): Receives the hyper-focused, pre-sorted 5 restaurant data points. It writes the personalized markdown explanation (AI Rationale) detailing exactly why these spots fit the user's needs.
+
+        The orchestrator catches this final text, bundles it alongside the structured data models, and returns a unified HybridSearchResponse back to the UI.
+

@@ -5,7 +5,8 @@ Handles:
 - Location: Converts lat/long to GeoJSON Point format
 - Service Hours: Converts time strings to "Minutes from Midnight"
 - Booleans: Ensures native boolean types
-- Creates required 2dsphere index
+- Embeddings: Generates OpenAI vector embeddings for RAG pipeline
+- Creates required 2dsphere and vector search indexes
 """
 
 import asyncio
@@ -14,12 +15,22 @@ from pathlib import Path
 from datetime import datetime, timezone
 import os
 from pymongo import GEOSPHERE, AsyncMongoClient
+from openai import AsyncOpenAI
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # MongoDB connection string (update as needed)
 MONGO_URI = os.getenv("MONGODB_URL")
 DB_NAME = os.getenv("DATABASE_NAME", "vybe")
 RESTAURANTS_COLLECTION = "restaurants"
 USERS_COLLECTION = "users"
+
+# OpenAI configuration
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+EMBEDDING_MODEL = "text-embedding-3-small"
+EMBEDDING_DIMENSIONS = 1536
 
 
 def time_to_minutes(time_str: str) -> int:
@@ -121,8 +132,73 @@ async def load_json_file(filepath: Path) -> dict | list:
         return json.load(f)
 
 
+async def generate_embedding(client: AsyncOpenAI, text: str) -> list[float] | None:
+    """Generate OpenAI embedding for given text"""
+    try:
+        response = await client.embeddings.create(
+            model=EMBEDDING_MODEL,
+            input=text,
+            dimensions=EMBEDDING_DIMENSIONS
+        )
+        return response.data[0].embedding
+    except Exception as e:
+        print(f"⚠️  Failed to generate embedding: {e}")
+        return None
+
+
+def build_embedding_text(doc: dict) -> str:
+    """
+    Build optimized embedding text with key attributes repeated for semantic emphasis.
+    Prioritizes searchable characteristics for better RAG retrieval.
+    """
+    # 1. Pull out core metadata
+    name = doc.get("name", "")
+    description = doc.get("description", "")
+    cuisine_list = doc.get("cuisine", [])
+    dietary_list = doc.get("dietary", [])
+    meal_types = doc.get("meal_types", [])
+
+    # 2. Extract AI Metadata
+    ai_meta = doc.get("ai_metadata", {})
+    atmosphere_tags = ai_meta.get("atmosphere", [])
+    vibe_tags = ai_meta.get("vibe_tags", [])
+    best_for = ai_meta.get("best_for", [])
+
+    # 3. Build semantic-rich embedding text with keyword emphasis
+    # Start with name and description (most important)
+    text_to_embed = f"{name}. {description}. "
+
+    # Add meal types early (searchable time-based queries)
+    if meal_types:
+        meal_str = ', '.join(meal_types)
+        text_to_embed += f"Open for: {meal_str}. Serves: {meal_str}. "
+
+    # Add dietary preferences (highly searchable)
+    if dietary_list:
+        diet_str = ', '.join(dietary_list)
+        text_to_embed += f"Offers: {diet_str}. Dietary options: {diet_str}. "
+
+    # Add cuisine types
+    if cuisine_list:
+        text_to_embed += f"Cuisine: {', '.join(cuisine_list)}. "
+
+    # Add vibe/atmosphere tags (searchable for ambiance queries)
+    if atmosphere_tags:
+        atmos_str = ', '.join(atmosphere_tags)
+        text_to_embed += f"Atmosphere: {atmos_str}. Feel: {atmos_str}. "
+
+    if vibe_tags:
+        text_to_embed += f"Vibes: {', '.join(vibe_tags)}. "
+
+    # Add best_for tags (intent-based search)
+    if best_for:
+        text_to_embed += f"Perfect for: {', '.join(best_for)}. "
+
+    return text_to_embed
+
+
 async def seed_restaurants(collection, restaurants_data: list) -> list | None:
-    """Insert restaurants and create geospatial index"""
+    """Insert restaurants, generate embeddings, and create indexes"""
     if not restaurants_data:
         print("⚠️  No restaurants to insert")
         return None
@@ -134,10 +210,57 @@ async def seed_restaurants(collection, restaurants_data: list) -> list | None:
     result = await collection.insert_many(transformed)
     print(f"✅ Inserted {len(result.inserted_ids)} restaurants")
 
-    # Create 2dsphere index
+    # Generate embeddings for each restaurant
+    print(f"\n🧠 Generating OpenAI embeddings for {len(transformed)} restaurants...")
+
+    if not OPENAI_API_KEY:
+        print("⚠️  OPENAI_API_KEY not set - skipping embedding generation")
+    else:
+        client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+
+        for i, doc in enumerate(transformed, 1):
+            try:
+                # Build comprehensive text for embedding
+                text_to_embed = build_embedding_text(doc)
+                print(f"   [{i}/{len(transformed)}] Generating embedding for: {doc.get('name')}...")
+
+                # Generate embedding vector
+                vector = await generate_embedding(client, text_to_embed)
+
+                if vector:
+                    # Store embedding and metadata in MongoDB
+                    await collection.update_one(
+                        {"_id": doc["_id"]},
+                        {
+                            "$set": {
+                                "vector_embeddings": vector,
+                                "embedding_model": EMBEDDING_MODEL,
+                                "embedding_dimensions": EMBEDDING_DIMENSIONS,
+                                "embedding_source": text_to_embed,
+                                "embedding_timestamp": datetime.now(timezone.utc)
+                            }
+                        }
+                    )
+                    print(f"      ✅ Embedding stored ({len(vector)} dimensions)")
+                else:
+                    print(f"      ⚠️  Skipped embedding for {doc.get('name')}")
+
+            except Exception as e:
+                print(f"      ❌ Error processing {doc.get('name')}: {e}")
+
+        print(f"\n✅ Embedding generation completed")
+
+    # Create indexes
     print("📍 Creating geospatial index...")
     await collection.create_index([("location", GEOSPHERE)])
     print("✅ Geospatial index created")
+
+    print("📍 Creating vector search index...")
+    try:
+        await collection.create_index([("vector_embeddings", "2dsphere")])
+        print("✅ Vector index created")
+    except Exception as e:
+        print(f"⚠️  Vector index creation note: {e}")
 
     return transformed
 
@@ -159,10 +282,10 @@ async def seed_users(collection, users_data: dict) -> dict | None:
     return transformed
 
 
-def get_mongo_uri_display(uri: str) -> str:
+def get_mongo_uri_display(uri: str | None) -> str:
     """Get a safe display version of the connection string"""
-    if "://" not in uri:
-        return uri
+    if not uri or "://" not in uri:
+        return uri or "NOT SET"
     try:
         # Dynamically preserve the scheme (e.g., mongodb:// or mongodb+srv://)
         scheme, parts = uri.split("://", 1)
@@ -171,13 +294,19 @@ def get_mongo_uri_display(uri: str) -> str:
             return f"{scheme}://***@{host_part}"
         return f"{scheme}://{parts}"
     except (IndexError, ValueError):
-        return uri  # Restored to safely return the fallback string
+        return uri
 
 
 async def main() -> bool:
     print("=" * 60)
     print("DATABASE SEEDING")
     print("=" * 60)
+
+    if not MONGO_URI:
+        print("❌ MONGO_URI not set")
+        print("   Set MONGODB_URL environment variable")
+        return False
+
     print(f"\n🔌 Connecting to MongoDB: {get_mongo_uri_display(MONGO_URI)}...")
 
     client = AsyncMongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
@@ -207,7 +336,8 @@ async def main() -> bool:
         else:
             restaurants_data = restaurants_raw
 
-        users_data = users_raw if isinstance(users_raw, dict) else users_raw
+        # Handle users data - take first item if list
+        users_data: dict = users_raw if isinstance(users_raw, dict) else (users_raw[0] if isinstance(users_raw, list) and users_raw else {})
 
         # Clear existing data
         print("\n🗑️  Clearing existing collections...")

@@ -1,122 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import SearchForm from './components/SearchForm';
+import RestaurantCard from './components/RestaurantCard';
+import RestaurantMap from './components/RestaurantMap';
+import { searchRestaurants } from './api/restaurants';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [restaurants, setRestaurants] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [searchLocation, setSearchLocation] = useState({ latitude: 43.77579, longitude: -79.20664 });
+  const [radius, setRadius] = useState(10);
+
+  const handleSearch = async (formData) => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const results = await searchRestaurants(formData);
+      setRestaurants(results);
+      setSearchLocation({ latitude: formData.latitude, longitude: formData.longitude });
+      setRadius(formData.radius_km);
+      setSelectedRestaurant(null);
+    } catch (err) {
+      setError(`Failed to search: ${err.message}`);
+      setRestaurants([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="w-full h-screen flex bg-gray-100 dark:bg-gray-950">
+      {/* Left Sidebar */}
+      <div className="w-96 bg-white dark:bg-gray-900 shadow-lg flex flex-col overflow-hidden">
+        <SearchForm onSearch={handleSearch} isLoading={isLoading} />
 
-      <div className="ticks"></div>
+        {error && (
+          <div className="px-6 py-3 bg-red-50 dark:bg-red-900 text-red-700 dark:text-red-200 text-sm">
+            {error}
+          </div>
+        )}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        {/* Results List */}
+        <div className="flex-1 overflow-y-auto">
+          {restaurants.length > 0 ? (
+            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+              {restaurants.map((restaurant) => (
+                <RestaurantCard
+                  key={restaurant.restaurant_id}
+                  restaurant={restaurant}
+                  isSelected={selectedRestaurant?.restaurant_id === restaurant.restaurant_id}
+                  onSelect={setSelectedRestaurant}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="p-6 text-center text-gray-500 dark:text-gray-400">
+              {isLoading ? 'Searching...' : 'No restaurants found. Try adjusting your search.'}
+            </div>
+          )}
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* Results count */}
+        {restaurants.length > 0 && (
+          <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400">
+            Found {restaurants.length} restaurant{restaurants.length !== 1 ? 's' : ''}
+          </div>
+        )}
+      </div>
+
+      {/* Right Map Panel */}
+      <div className="flex-1 p-4">
+        <RestaurantMap
+          restaurants={restaurants}
+          searchLocation={searchLocation}
+          radius={radius}
+          selectedRestaurant={selectedRestaurant}
+          onMarkerSelect={setSelectedRestaurant}
+        />
+      </div>
+    </div>
+  );
 }
-
-export default App

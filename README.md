@@ -92,3 +92,11 @@ pipenv run pytest
 Once the backend is running, visit:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
+
+
+
+
+## Seeding MongoDB Collection for resturants
+1. The preprocessing of JSON data is in the script
+2. Any PDF file can be extracted into JSON and that can be transformed and sent to the seed_restaurants.py
+3. JSON -> MongoDB Atlas

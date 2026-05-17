@@ -23,6 +23,9 @@ backend/
 
 
 
+
+
+
 Context: We are building a Restaurant Discovery Service for a platform called VYBE. The goal is to implement a high-performance, personalized search using PyMongo Async and FastAPI.
 1. Core Architecture
 
@@ -72,28 +75,67 @@ The MongoDB Aggregation Pipeline must execute in this order:
 
     Testing: Pytest (Async). Use the test/ folder data to verify that "Mr. Vegan" at the Scarborough coordinates correctly ranks "Purely Vegan Hub" first.
 
-📁 Folder Structure Reference for Claude
-Plaintext
+## RAG Pipeline & Vector Embeddings (Enterprise Agentic Search)
 
-backend/
-└── app/
-    ├── api/             # FastAPI Endpoints
-    ├── model/           # Pydantic Models (Users/Restaurants)
-    ├── repositories/    # MongoDB Async Implementations
-    └── services/        # Business Logic & Preference Injection
+### Overview
+Implementing an enterprise-grade Agentic RAG (Retrieval-Augmented Generation) pipeline for semantic restaurant discovery using OpenAI embeddings and CrewAI orchestration.
 
-🧪 Instructions for Claude:
+**Architecture:** Service-Layer + Repository + Adapter patterns
+- **Embedding Adapter**: Converts restaurant metadata → OpenAI vectors (text-embedding-3-small, 1536 dims)
+- **Repository Layer**: MongoDB $vectorSearch queries (ID-bounded with re-ranking)
+- **Orchestrator Service**: CrewAI multi-agent workflow (Intent Classification → Requirements → Answer Generation)
+- **API Endpoint**: `/restaurants/chat` accepts RequirementHybridSearchRequest (query text + restaurant_ids)
 
-    "Using the provided summary and the sample files in the /test directory, please implement the RestaurantRepository and RestaurantService.
+### Mock Restaurant Dataset
+Created 19 comprehensive test restaurants covering:
+- ✅ 24-hour & late-night venues (The Night Owl Diner, 24hr Vegan Diner)
+- ✅ Dietary specializations (vegan, gluten-free, halal, kosher)
+- ✅ Ambiance/vibe matching (date night, work-friendly, family-oriented)
+- ✅ Live music venues
+- ✅ Budget & fine dining options
+- ✅ Geographic diversity across Toronto area
 
-        Start by refactoring restaurants.json into the GeoJSON/Integer-hour format.
+### Embedding Strategy
+**Semantic Text Composition** (`build_embedding_text()` in seed_database.py):
+1. Name + description (highest weight)
+2. Meal types repeated (for time-based queries: "late night", "24 hour")
+3. Dietary options repeated (for dietary queries: "vegan", "gluten-free")
+4. Cuisine types
+5. Atmosphere & vibe tags
+6. Best-for intent tags (e.g., "Perfect for: date night, group dinners")
 
-        Implement the Async MongoDB connection.
+**Important:** Must explicitly encode "24 hour" / "always open" status in embedding text for optimal semantic matching.
 
-        Write the Aggregation Pipeline that supports the 'Complete Filter Object' logic.
+### Database Seeding (`backend/scripts/seed_database.py`)
+- Transforms restaurant JSON → RestaurantEntity (GeoJSON location, normalized service hours)
+- Generates OpenAI embeddings (1536-dim vectors)
+- Stores per document:
+  - `vector_embeddings`: The embedding vector
+  - `embedding_model`: "text-embedding-3-small"
+  - `embedding_dimensions`: 1536
+  - `embedding_source`: The text that was embedded
+  - `embedding_timestamp`: Creation timestamp
+- Creates geospatial index for $geoNear queries
+- Loads environment from `.env` file (MONGODB_URL, OPENAI_API_KEY, DATABASE_NAME)
 
-        Ensure the service layer correctly 'fills the gaps' for incomplete requests using the UserRepo."
+### Vector Similarity Testing (`backend/test/test_vector_similarity.py`)
+Script to validate embedding quality before full deployment:
+1. Connects to MongoDB Atlas
+2. Fetches stored restaurant embeddings
+3. Generates embeddings for test queries
+4. Calculates cosine similarity (0-100%)
+5. Scores queries (🔥 >75% excellent, ✅ 60-75% good, ⚠️ 50-60% moderate, ❌ <50% low)
 
+**Current Findings:**
+- Vegan/dietary queries: 65-71% (good)
+- Late night queries: 54-58% (moderate - need explicit "24 hour" emphasis)
+- Unrelated queries: 27-30% (correctly low)
 
+### Next Steps
+1. Enhance `build_embedding_text()` to check service_hours and explicitly include "Open 24 hours" for 24hr restaurants
+2. Implement MongoDB $vectorSearch queries (ID-bounded to passed restaurant_ids)
+3. Build Re-ranker Adapter (cross-encoder for top-5 precision filtering)
+4. Integrate CrewAI Orchestrator with 3-agent workflow
+5. Add Pytest integration tests for end-to-end RAG pipeline
 
   
