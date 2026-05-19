@@ -1,22 +1,72 @@
+# NOTE: Pipfile and Pipfile.lock SHOULD be committed (needed for team members)
+# NOTE: frontend/package-lock.json or frontend/yarn.lock SHOULD be committed
+
 # Frontend
 frontend/dist/
 frontend/node_modules/
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+frontend/.vite/
 
 # Backend
 backend/.venv/
 backend/venv/
+backend/env/
 backend/__pycache__/
 backend/*.pyc
 backend/.env
 backend/.env.local
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/dist/
+backend/build/
+backend/*.egg-info/
+backend/pip-log.txt
 
-# IDE
+# IDE & Editors
 .DS_Store
 .idea/
 .vscode/
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
+.env.local.*
+.vscode/settings.json
+.vscode/launch.json
 
-# Environment
+# Environment & Secrets
 .env
 .env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+.DS_Store
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Local testing/development
+.cache/
+tmp/
+temp/
+*.tmp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Misc
+.coverage
+.pytest_cache/
+node_modules/
+*.pem
+*.key
+.DS_Store

@@ -81,11 +81,60 @@ npm run dev
 
 ## Testing
 
-Run backend tests:
+### Test Files
+
+The backend includes comprehensive test coverage for the RAG pipeline and restaurant discovery service:
+
+| Test File | Purpose |
+|-----------|---------|
+| `test_restaurant_service.py` | Integration tests for RestaurantService with preference injection and geospatial search |
+| `test_hybrid_search_service.py` | Tests for HybridSearchService with OpenAI embeddings and MongoDB vector search |
+| `test_vector_similarity.py` | Validates embedding quality and cosine similarity scores for semantic search queries |
+| `conftest.py` | Pytest fixtures and MongoDB connection setup for async tests |
+
+### Running Tests
+
+**Prerequisites:**
+- MongoDB Atlas connection (MONGODB_URL env var)
+- OpenAI API key (OPENAI_API_KEY env var)
+- Database seeded with test data
+
+**Run all tests:**
 ```bash
 cd backend
 pipenv run pytest
 ```
+
+**Run specific test file:**
+```bash
+pipenv run pytest test/test_restaurant_service.py -v
+```
+
+**Run with coverage:**
+```bash
+pipenv run pytest --cov=app --cov-report=html
+```
+
+**Run a specific test:**
+```bash
+pipenv run pytest test/test_restaurant_service.py::test_restaurant_search_with_preference_injection -v
+```
+
+**Run vector similarity validation:**
+```bash
+pipenv run python test/test_vector_similarity.py
+```
+
+### Environment Setup for Testing
+
+Create a `.env` file in the `backend/` directory with:
+```
+MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
+OPENAI_API_KEY=sk-...
+DATABASE_NAME=vybe
+```
+
+**Note:** Tests require a running MongoDB Atlas connection and seeded restaurant data.
 
 ## API Documentation
 
