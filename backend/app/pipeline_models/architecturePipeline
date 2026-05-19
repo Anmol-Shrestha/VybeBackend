@@ -1,0 +1,34 @@
+[HTTP Request Bus] ──► Query Text + Screen Restaurant IDs
+                             │
+                             ▼
+                    [RestaurantService] (Universal Front Door)
+                             │
+                             ▼
+               [RestaurantAgentOrchestrator] (CrewAI Pipeline Manager)
+                             │
+                             ├──────────────────────────┐
+                             ▼                          ▼
+                   [Intent Classifier]        [Requirements Agent]
+                  (Checks search style)       (Invokes Target Tool)
+                                                        │
+                                                        ▼
+                                            [ID-Bounded Search Tool]
+                                                        │
+                        ┌───────────────────────────────┴──────────────────────────────┐
+                        ▼                                                              ▼
+             [OpenAIEmbeddingAdapter]                                     [MongoRestaurantRepository]
+          (Turns user query into math)                                   .vector_search_within_ids()
+                        │                                                              │
+                        └───────────────────────────────┬──────────────────────────────┘
+                                                        ▼
+                                           [MongoDB Atlas Vector Graph]
+                                         (Runs math ONLY within safe IDs)
+                                                        │
+                                                        ▼
+                                           [RestaurantRerankerAdapter]
+                                         (Cross-Encoder precision sorting)
+                                                        │
+                             ┌──────────────────────────┴──────────────────────────┐
+                             ▼                                                     ▼
+                  [Answer Generator Agent]                                [Unified JSON Response]
+              (Writes markdown text rationale)                         (Top 5 items + AI Summary Text)

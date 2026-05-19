@@ -8,6 +8,11 @@ class GeoLocation(BaseModel):
     coordinates: List[float] = Field(..., description="[Longitude, Latitude]")
 
 
+
+
+
+
+
 class RestaurantEntity(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
@@ -65,7 +70,8 @@ class RestaurantSearchRequest(BaseModel):
     
 
 # --- 3. API Response Models ---
-class RestaurantsSearchResponse(BaseModel):
+class RestaurantsSearchResponse(BaseModel): 
+    
     restaurant_id: str
     name: str
     latitude: float
@@ -103,3 +109,15 @@ class RestaurantsSearchResponse(BaseModel):
             has_live_music=entity.has_live_music,
             max_capacity=entity.max_capacity
         )
+        
+        
+        
+        
+class RestaurantVectorSearchRequest(BaseModel):
+    query:str
+    restaurant_ids:List[str]
+    limit: int = 10
+    num_candidates = int = 100
+    
+    
+

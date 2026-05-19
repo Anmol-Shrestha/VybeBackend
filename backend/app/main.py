@@ -1,17 +1,56 @@
 """FastAPI application for Restaurant Search Service."""
 
+import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from pymongo import AsyncMongoClient
+from dotenv import load_dotenv
 
 from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
 from app.repositories.mongo_user_repo import MongoUserRepository
 from app.services.restaurant_service import RestaurantService
 from app.model.restaurants.models import RestaurantSearchRequest, RestaurantsSearchResponse
 
+load_dotenv()
+
+
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Initialize MongoDB client and repositories
+    mongodb_url = os.getenv("MONGODB_URL")
+    db_name = os.getenv("DATABASE_NAME", "vybe")
+
+    if not mongodb_url:
+        raise RuntimeError("MONGODB_URL environment variable not set")
+
+    app.mongodb_client = AsyncMongoClient(mongodb_url, serverSelectionTimeoutMS=5000)
+    app.database = app.mongodb_client[db_name]
+    app.restaurant_repo = MongoRestaurantRepository(app.database["restaurants"])
+    app.user_repo = MongoUserRepository(app.database["users"])
+    app.restaurant_service = RestaurantService(
+        app.restaurant_repo,
+        app.user_repo
+    )
+
+    print("✅ Application startup: MongoDB connected, repositories initialized")
+
+    yield
+
+    # Shutdown: Close database connection
+    await app.mongodb_client.close()
+    print("✅ Application shutdown: MongoDB connection closed")
+
+
+
+
 app = FastAPI(
     title="Restaurant Search API",
     description="VYBE Restaurant Discovery Service",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan
 )
 
 # Enable CORS for Postman and local testing
@@ -55,20 +94,11 @@ async def search_restaurants(
     Returns: List of restaurants sorted by match score and distance
     """
     try:
-        # Initialize repositories (they use the global MongoDB client)
-        restaurant_repo = MongoRestaurantRepository()
-        user_repo = MongoUserRepository()
-
-        # Create service with dependency injection
-        service = RestaurantService(restaurant_repo, user_repo)
-
         # Execute search with optional preference injection
-        results = await service.get_filtered_restaurants(request, bypass_hours=bypass_hours)
-
+        results = await app.restaurant_service.get_filtered_restaurants(request, bypass_hours=bypass_hours)
         return results
 
     except Exception as e:
-        
         raise HTTPException(status_code=500, detail=str(e))
 
 

@@ -3,12 +3,11 @@
 from typing import Optional
 from app.repositories.user_repo import UserRepository
 from app.model.users.models import UserEntity
-from app.db.client import db
 
 
 class MongoUserRepository(UserRepository):
-    def __init__(self):
-        self.collection = db["users"]
+    def __init__(self, collection):
+        self.collection = collection
 
     async def get_by_id(self, user_id: str) -> Optional[UserEntity]:
         """

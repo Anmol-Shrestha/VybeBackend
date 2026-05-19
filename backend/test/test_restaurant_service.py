@@ -1,6 +1,8 @@
 """Integration tests for RestaurantService with preference injection."""
 
+import os
 import pytest
+from pymongo import AsyncMongoClient
 from app.services.restaurant_service import RestaurantService
 from app.repositories.mongo_user_repo import MongoUserRepository
 from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
@@ -27,9 +29,16 @@ async def test_restaurant_search_with_preference_injection():
     - Sultan's Halal Kitchen (halal only)
     - The Kosher Deli (kosher only)
     """
-    # Initialize repositories
-    user_repo = MongoUserRepository()
-    restaurant_repo = MongoRestaurantRepository()
+    # Initialize MongoDB connection
+    mongodb_url = os.getenv("MONGODB_URL")
+    database_name = os.getenv("DATABASE_NAME", "vybe")
+
+    client = AsyncMongoClient(mongodb_url, serverSelectionTimeoutMS=5000)
+    db = client[database_name]
+
+    # Instantiate repositories with collections
+    user_repo = MongoUserRepository(db["users"])
+    restaurant_repo = MongoRestaurantRepository(db["restaurants"])
     service = RestaurantService(restaurant_repo, user_repo)
 
     # Create an incomplete search request (dietary is empty)
@@ -75,3 +84,6 @@ async def test_restaurant_search_with_preference_injection():
     # Verify we got the dietary requirement in the results
     for result in results:
         assert "vegan" in result.dietary, f"{result.name} should have vegan in dietary"
+
+    # Cleanup
+    await client.close()

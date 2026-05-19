@@ -21,14 +21,18 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Test queries to compare against restaurants
 TEST_QUERIES = [
-    "Is there a 24 hour restaurant i can try",
-    "I want vegan late night food",
-    "Looking for somewhere open 24/7",
-    "Best vegan diner",
-    "Late night dining options",
-    "Best Italian restaurant nearby",
-    "Looking for a nice steakhouse",
+    "open 24 hours restaurant",
+    "open 24/7 food nearby",
+    "late night food",
+    "vegan late night restaurant",
+    "vegan diner",
+    "Italian restaurant nearby",
+    "nice steakhouse",
+    "cozy romantic dinner place",
+    "family-friendly brunch",
+    "gluten free options",
 ]
+
 
 
 async def generate_query_embedding(client: AsyncOpenAI, query: str) -> list[float] | None:

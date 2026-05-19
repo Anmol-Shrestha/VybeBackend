@@ -197,8 +197,16 @@ def build_embedding_text(doc: dict) -> str:
     return text_to_embed
 
 
+
+"""
+
+
+from pymongo.operations import SearchIndexModel
+
+
+
 async def seed_restaurants(collection, restaurants_data: list) -> list | None:
-    """Insert restaurants, generate embeddings, and create indexes"""
+    Insert restaurants, generate embeddings, and create indexes
     if not restaurants_data:
         print("⚠️  No restaurants to insert")
         return None
@@ -251,14 +259,138 @@ async def seed_restaurants(collection, restaurants_data: list) -> list | None:
         print(f"\n✅ Embedding generation completed")
 
     # Create indexes
-    print("📍 Creating geospatial index...")
-    await collection.create_index([("location", GEOSPHERE)])
-    print("✅ Geospatial index created")
+        search_index_model = SearchIndexModel(
+    definition={
+        "fields":[
+            {
+                "type":"vector",
+                "path":"vector_embeddings",
+                "numDimensions":EMBEDDING_DIMENSIONS,
+                "similarity":"cosine"
+            }
+        ]
+    },
+    name="restaurants_vector_index",
+    type="vectorSearch"
+)
 
-    print("📍 Creating vector search index...")
+        await collection.create_search_index(model=search_index_model)
+        
+        for index in collection.list_search_indexes():
+            print(index)
+
+    return transformed
+
+"""
+from datetime import datetime, timezone
+from openai import AsyncOpenAI
+from pymongo.operations import SearchIndexModel
+
+async def seed_restaurants(collection, restaurants_data: list) -> list | None:
+    """Insert restaurants, generate embeddings, and create vector search index."""
+    if not restaurants_data:
+        print("⚠️  No restaurants to insert")
+        return None
+
+    print(f"\n📝 Transforming {len(restaurants_data)} restaurants...")
+    transformed = [
+        transform_restaurant(r, i)
+        for i, r in enumerate(restaurants_data, 1)
+    ]
+
+    print(f"📤 Inserting {len(transformed)} restaurants into MongoDB...")
+    result = await collection.insert_many(transformed)
+    print(f"✅ Inserted {len(result.inserted_ids)} restaurants")
+
+    print(f"\n🧠 Generating OpenAI embeddings for {len(transformed)} restaurants...")
+
+    if not OPENAI_API_KEY:
+        print("⚠️  OPENAI_API_KEY not set - skipping embedding generation")
+    else:
+        client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+
+        for i, doc in enumerate(transformed, 1):
+            try:
+                # Skip if embedding already exists
+                existing = await collection.find_one(
+                    {"_id": doc["_id"]},
+                    {"vector_embeddings": 1}
+                )
+
+                if existing and existing.get("vector_embeddings"):
+                    print(f"   [{i}/{len(transformed)}] Skipping {doc.get('name')} - embedding already exists")
+                    continue
+
+                text_to_embed = build_embedding_text(doc)
+                print(f"   [{i}/{len(transformed)}] Generating embedding for: {doc.get('name')}...")
+
+                vector = await generate_embedding(client, text_to_embed)
+
+                if vector:
+                    await collection.update_one(
+                        {"_id": doc["_id"]},
+                        {
+                            "$set": {
+                                "vector_embeddings": vector,
+                                "embedding_model": EMBEDDING_MODEL,
+                                "embedding_dimensions": EMBEDDING_DIMENSIONS,
+                                "embedding_source": text_to_embed,
+                                "embedding_timestamp": datetime.now(timezone.utc),
+                            }
+                        }
+                    )
+                    print(f"      ✅ Embedding stored ({len(vector)} dimensions)")
+                else:
+                    print(f"      ⚠️  Skipped embedding for {doc.get('name')}")
+
+            except Exception as e:
+                print(f"      ❌ Error processing {doc.get('name')}: {e}")
+
+        print("\n✅ Embedding generation completed")
+        
     try:
-        await collection.create_index([("vector_embeddings", "2dsphere")])
-        print("✅ Vector index created")
+        await collection.drop_index("vector_embeddings_2dsphere")
+        print("✅ Dropped incorrect geospatial index on vector_embeddings")
+    except Exception:
+        print("ℹ️ No geospatial index on vector_embeddings to drop") 
+        
+    # Create vector search index only if it doesn't already exist
+    print("\n📍 Ensuring vector search index exists...")
+    try:
+        index_name = "restaurants_vector_index"
+
+        existing_indexes = []
+        print("📋 Current search indexes:")
+        cursor = await collection.list_search_indexes()
+        indexes = await cursor.to_list(length=None)
+        for index in indexes:
+            print(index)
+
+        if any(idx.get("name") == index_name for idx in existing_indexes):
+            print("✅ Vector search index already exists")
+        else:
+            
+            search_index_model = SearchIndexModel(
+                definition={
+                    "fields": [
+                        {
+                            "type": "vector",
+                            "path": "vector_embeddings",
+                            "numDimensions": EMBEDDING_DIMENSIONS,
+                            "similarity": "cosine"
+                        }, {
+                "type": "filter",
+                "path": "restaurant_id"
+            }
+                    ]
+                },
+                name=index_name,
+                type="vectorSearch"
+            )
+
+            await collection.create_search_index(model=search_index_model)
+            print("✅ Vector search index created")
+
     except Exception as e:
         print(f"⚠️  Vector index creation note: {e}")
 
