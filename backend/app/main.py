@@ -2,7 +2,7 @@
 
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import AsyncMongoClient
 from dotenv import load_dotenv
@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
 from app.repositories.mongo_user_repo import MongoUserRepository
 from app.services.restaurant_service import RestaurantService
-from app.model.restaurants.models import RestaurantSearchRequest, RestaurantsSearchResponse
+from app.api.v1.restaurants import router as v1_restaurants_router
 
 load_dotenv()
 
@@ -62,44 +62,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include V1 API routers
+app.include_router(v1_restaurants_router)
+
 
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
     return {"status": "ok"}
-
-
-@app.post("/api/restaurants/search", response_model=list[RestaurantsSearchResponse])
-async def search_restaurants(
-    request: RestaurantSearchRequest,
-    bypass_hours: bool = Query(False, description="Skip service hours check for testing")
-) -> list[RestaurantsSearchResponse]:
-    """
-    Search for restaurants based on location and preferences.
-
-    Request body:
-    - userID (optional): User ID for preference injection
-    - latitude: User's latitude
-    - longitude: User's longitude
-    - radius_km: Search radius in km (default: 5)
-    - meal_types (optional): List of meal types (e.g., ["breakfast", "lunch"])
-    - cuisine (optional): List of cuisines (e.g., ["italian", "vegan"])
-    - dietary (optional): Dietary restrictions (e.g., ["vegan"])
-    - price_max (optional): Maximum price level (1-4)
-    - min_rating (optional): Minimum rating (default: 0.0)
-    - min_capacity (optional): Minimum capacity (default: 1)
-    - has_parking (optional): Must have parking
-    - has_live_music (optional): Must have live music
-
-    Returns: List of restaurants sorted by match score and distance
-    """
-    try:
-        # Execute search with optional preference injection
-        results = await app.restaurant_service.get_filtered_restaurants(request, bypass_hours=bypass_hours)
-        return results
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
 
 if __name__ == "__main__":
