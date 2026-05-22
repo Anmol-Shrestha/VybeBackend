@@ -11,6 +11,7 @@ pymongo = {extras = ["asynchronous"], version = "*"}
 pytest = "*"
 pytest-asyncio = "*"
 python-dotenv = "*"
+numpy = "<2"
 
 [dev-packages]
 openai = "*"

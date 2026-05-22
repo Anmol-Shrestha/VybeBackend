@@ -200,7 +200,7 @@ async def test_search_quality_evals(setup_hybrid_search, case):
     )
 
     # Extract restaurant IDs from results
-    actual_ids = [r.restaurant_id if hasattr(r, "restaurant_id") else r["restaurant_id"] for r in results]
+    actual_ids = [r.entity.restaurant_id for r in results]
 
     # Calculate metrics
     p1 = calculate_precision_at_k(actual_ids, case["expected_top_ids"], k=1)

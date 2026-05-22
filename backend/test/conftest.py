@@ -62,3 +62,26 @@ async def mongo_restaurant_collection():
 
     # Cleanup
     await client.close()
+
+
+@pytest.fixture
+async def setup_hybrid_search(mongo_restaurant_collection):
+    """Set up HybridSearchService with real dependencies for testing."""
+    from openai import AsyncOpenAI
+    from app.services.hybrid_search_service import HybridSearchService
+    from app.pipeline_models.openai_adapter import OpenAIEmbeddingAdapter
+    from app.pipeline_models.restaurant_reranker import RestaurantRerankerAdapter
+    from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
+
+    openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    embedding_adapter = OpenAIEmbeddingAdapter(client=openai_client, model="text-embedding-3-small")
+    restaurant_repo = MongoRestaurantRepository(mongo_restaurant_collection)
+    reranker_adapter = RestaurantRerankerAdapter()
+
+    hybrid_search = HybridSearchService(
+        embedding_adapter=embedding_adapter,
+        vector_repository=restaurant_repo,
+        reranker_adapter=reranker_adapter,
+    )
+
+    return hybrid_search
