@@ -1,4 +1,4 @@
-from embedding_adapter import EmbeddingAdapter
+from app.pipeline_models.embedding_adapter import EmbeddingAdapter
 
 class OpenAIEmbeddingAdapter(EmbeddingAdapter):
     def __init__(self, client, model: str):

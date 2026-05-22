@@ -1,7 +1,12 @@
 export default function RestaurantCard({ restaurant, isSelected, onSelect }) {
+  const handleClick = () => {
+    console.log('🍽️ Restaurant ID:', restaurant.restaurant_id);
+    onSelect(restaurant);
+  };
+
   return (
     <div
-      onClick={() => onSelect(restaurant)}
+      onClick={handleClick}
       className={`p-4 border-l-4 cursor-pointer transition ${
         isSelected
           ? 'bg-purple-50 dark:bg-purple-900 border-l-purple-600'

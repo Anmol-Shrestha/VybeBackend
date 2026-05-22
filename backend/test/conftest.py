@@ -6,6 +6,8 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+import pytest
+from pymongo import AsyncMongoClient
 
 
 def pytest_configure(config):
@@ -43,3 +45,20 @@ def pytest_configure(config):
     print(f"\n✅ Test environment loaded:")
     print(f"   Database: {database_name}")
     print(f"   MongoDB: Connected to Atlas cluster")
+
+
+@pytest.fixture
+async def mongo_restaurant_collection():
+    """Fixture to provide MongoDB restaurant collection for testing."""
+    mongodb_url = os.getenv("MONGODB_URL")
+    database_name = os.getenv("DATABASE_NAME", "vybe")
+
+    # Connect to MongoDB
+    client = AsyncMongoClient(mongodb_url, serverSelectionTimeoutMS=5000)
+    db = client[database_name]
+    collection = db["restaurants"]
+
+    yield collection
+
+    # Cleanup
+    await client.close()

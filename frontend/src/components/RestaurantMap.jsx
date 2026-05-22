@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -12,6 +12,7 @@ export default function RestaurantMap({ restaurants, searchLocation, radius, sel
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markersRef = useRef([]);
+  const popupsRef = useRef([]);
 
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -70,9 +71,11 @@ export default function RestaurantMap({ restaurants, searchLocation, radius, sel
   useEffect(() => {
     if (!map.current || !restaurants.length) return;
 
-    // Clear existing markers
+    // Clear existing markers and popups
     markersRef.current.forEach(marker => marker.remove());
+    popupsRef.current.forEach(popup => popup.remove());
     markersRef.current = [];
+    popupsRef.current = [];
 
     // Add new markers
     restaurants.forEach((restaurant) => {
@@ -88,8 +91,23 @@ export default function RestaurantMap({ restaurants, searchLocation, radius, sel
         .setLngLat([restaurant.longitude, restaurant.latitude])
         .addTo(map.current);
 
+      // Create popup with cuisine info
+      const popup = new mapboxgl.Popup({ offset: 25, closeButton: false })
+        .setHTML(`
+          <div style="padding: 8px; font-size: 13px;">
+            <div style="font-weight: 600; margin-bottom: 4px;">${restaurant.name}</div>
+            <div style="color: #666; font-size: 12px;">
+              🍴 ${restaurant.cuisine.join(', ')}
+            </div>
+          </div>
+        `);
+
+      el.addEventListener('mouseenter', () => popup.addTo(map.current));
+      el.addEventListener('mouseleave', () => popup.remove());
       el.addEventListener('click', () => onMarkerSelect(restaurant));
+
       markersRef.current.push(marker);
+      popupsRef.current.push(popup);
     });
   }, [restaurants, onMarkerSelect]);
 

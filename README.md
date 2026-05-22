@@ -35,7 +35,7 @@ A full-stack restaurant search application with FastAPI backend and React fronte
 ```bash
 cd backend
 pipenv install --dev
-pipenv run python -m uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+pipenv run python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 **Frontend:**
@@ -132,7 +132,7 @@ Create a `.env` file in the `backend/` directory with:
 MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/?retryWrites=true&w=majority
 OPENAI_API_KEY=sk-...
 DATABASE_NAME=vybe
-```
+```backend
 
 **Note:** Tests require a running MongoDB Atlas connection and seeded restaurant data.
 

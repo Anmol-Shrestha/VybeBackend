@@ -13,6 +13,8 @@ pytest-asyncio = "*"
 python-dotenv = "*"
 
 [dev-packages]
+openai = "*"
+sentence-transformers = "*"
 
 [requires]
 python_version = "3.13"

@@ -45,14 +45,14 @@ class RestaurantService:
         # - Authenticated users with injected preferences: personalized results
         # - Authenticated users with explicit dietary: respects their choice
         # - Anonymous users: results based on provided cuisine/meal_types filters
-        entities = await self.repo_restaurant.filter_restaurants(filters, bypass_hours=bypass_hours)
+        search_results = await self.repo_restaurant.filter_restaurants(filters, bypass_hours=bypass_hours)
 
-        # Transform entities to response format
+        # Transform search results to response format
         responses = []
-        for entity in entities:
+        for result in search_results:
             response = RestaurantsSearchResponse.from_entity(
-                entity,
-                distance=getattr(entity, "distance_km", 0),
+                result.entity,
+                distance=result.distance_km,
                 is_open=True
             )
             responses.append(response)

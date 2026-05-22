@@ -1,4 +1,4 @@
-"""Test HybridSearchService with real OpenAI embeddings and MongoDB vector search."""
+"""Integration Test : Tests if HybridSearchService works, but not how well it performs"""
 
 import os
 from openai import AsyncOpenAI
@@ -8,6 +8,8 @@ from app.services.restaurant_search_service import RestaurantSearchService
 from app.pipeline_models.openai_adapter import OpenAIEmbeddingAdapter
 from app.pipeline_models.restaurant_reranker import RestaurantRerankerAdapter
 from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
+from app.model.restaurants.models import RestaurantSearchResult
+
 
 
 @pytest.fixture
@@ -27,6 +29,8 @@ async def setup_hybrid_search(mongo_restaurant_collection):
     return hybrid_search
 
 
+
+
 @pytest.mark.asyncio
 async def test_hybrid_search_service_vegan_query(setup_hybrid_search):
     """Test HybridSearchService with a vegan restaurant query."""
@@ -34,10 +38,11 @@ async def test_hybrid_search_service_vegan_query(setup_hybrid_search):
 
     # Use some restaurant IDs from the seeded data
     restaurant_ids = [
-        "vegan_hub_1",
-        "vegan_diner_24hr",
-        "mixed_cuisine_1",
-        "seafood_place_1",
+        "restaurant_2",
+        "restaurant_7",
+        "restaurant_1",
+        "restaurant_6",
+        "restaurant_4"
     ]
 
     results = await hybrid_search.search(
@@ -49,8 +54,12 @@ async def test_hybrid_search_service_vegan_query(setup_hybrid_search):
 
     assert len(results) > 0
     assert len(results) <= 5
-    assert all("name" in r or "score" in r for r in results)
-    print(f"✅ Vegan query returned {len(results)} results")
+    assert all(isinstance(r, RestaurantSearchResult) for r in results)
+    print(f"✅ Vegan query returned {len(results)} RestaurantSearchResult objects")
+    for r in results:
+        print(f"   - {r.entity.name} (distance: {r.distance_km}km, rerank_score: {getattr(r, 'rerank_score', 0):.2f})")
+
+
 
 
 @pytest.mark.asyncio
@@ -60,9 +69,11 @@ async def test_restaurant_search_service_facade(setup_hybrid_search):
     restaurant_search = RestaurantSearchService(hybrid_search=hybrid_search)
 
     restaurant_ids = [
-        "vegan_hub_1",
-        "vegan_diner_24hr",
-        "mixed_cuisine_1",
+        "restaurant_2",
+        "restaurant_7",
+        "restaurant_1",
+        "restaurant_6",
+        "restaurant_4"
     ]
 
     results = await restaurant_search.search(
@@ -76,17 +87,19 @@ async def test_restaurant_search_service_facade(setup_hybrid_search):
     print(f"✅ RestaurantSearchService facade works: {len(results)} results")
 
 
+
+
 @pytest.mark.asyncio
 async def test_hybrid_search_diverse_queries(setup_hybrid_search):
     """Test HybridSearchService with various query types."""
     hybrid_search = setup_hybrid_search
 
     restaurant_ids = [
-        "vegan_hub_1",
-        "vegan_diner_24hr",
-        "mixed_cuisine_1",
-        "seafood_place_1",
-        "italian_restaurant_1",
+        "restaurant_2",
+        "restaurant_7",
+        "restaurant_1",
+        "restaurant_6",
+        "restaurant_4"
     ]
 
     queries = [

@@ -3,3 +3,5 @@ fastapi
 pymongo
 pytest
 pytest-asyncio
+openai
+sentence-transformers

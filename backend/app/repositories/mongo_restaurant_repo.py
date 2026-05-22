@@ -2,14 +2,14 @@
 
 from datetime import datetime
 from app.repositories.restaurant_repo import RestaurantRepository
-from app.model.restaurants.models import RestaurantEntity, GeoLocation
+from app.model.restaurants.models import RestaurantEntity, GeoLocation, RestaurantSearchResult
 
 
 class MongoRestaurantRepository(RestaurantRepository):
     def __init__(self, collection):
         self.collection = collection
 
-    async def filter_restaurants(self, criteria: dict, bypass_hours: bool = False) -> list[RestaurantEntity]:
+    async def filter_restaurants(self, criteria: dict, bypass_hours: bool = False) -> list[RestaurantSearchResult]:
         """
         Executes the 5-stage aggregation pipeline:
         1. $geoNear: Proximity filter with dietary query
@@ -136,10 +136,9 @@ class MongoRestaurantRepository(RestaurantRepository):
         cursor = await self.collection.aggregate(pipeline)
         results = await cursor.to_list(length=20)
 
-        # Transform to RestaurantEntity
-        entities = []
+        # Transform to RestaurantSearchResult (entity + distance)
+        search_results = []
         for doc in results:
-            # Convert location dict to GeoLocation
             location = GeoLocation(
                 type=doc["location"].get("type", "Point"),
                 coordinates=doc["location"].get("coordinates", [0, 0])
@@ -162,9 +161,10 @@ class MongoRestaurantRepository(RestaurantRepository):
                 service_hours=doc.get("service_hours", {}),
                 ai_metadata=doc.get("ai_metadata", {})
             )
-            entities.append(entity)
+            distance = doc.get("distance_km", 0.0)
+            search_results.append(RestaurantSearchResult(entity, distance))
 
-        return entities
+        return search_results
 
     async def vector_search_by_ids(
         self,
@@ -172,10 +172,10 @@ class MongoRestaurantRepository(RestaurantRepository):
         query_embedding: list[float],
         limit: int = 10,
         num_candidates: int = 100,
-    ) -> list[RestaurantEntity]:
+    ) -> list[RestaurantSearchResult]:
         """
         Run vector search only within the restaurants identified by restaurant_ids.
-        
+
         A few important notes:
 
         This uses MongoDB’s built-in vector search
@@ -223,8 +223,8 @@ class MongoRestaurantRepository(RestaurantRepository):
         cursor = await self.collection.aggregate(pipeline)
         results = await cursor.to_list(length=None)
 
-        # Transform to RestaurantEntity (same as filter_restaurants)
-        entities = []
+        # Transform to RestaurantSearchResult (entity + distance from vector search score)
+        search_results = []
         for doc in results:
             location = GeoLocation(
                 type=doc["location"].get("type", "Point"),
@@ -248,8 +248,9 @@ class MongoRestaurantRepository(RestaurantRepository):
                 service_hours=doc.get("service_hours", {}),
                 ai_metadata=doc.get("ai_metadata", {})
             )
-            entities.append(entity)
+            distance = doc.get("distance_km", 0.0)
+            search_results.append(RestaurantSearchResult(entity, distance))
 
-        return entities
+        return search_results
 
 

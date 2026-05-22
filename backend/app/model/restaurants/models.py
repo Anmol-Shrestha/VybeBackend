@@ -3,10 +3,10 @@
 from typing import List, Dict, Optional
 from pydantic import BaseModel, Field, ConfigDict
 
+
 class GeoLocation(BaseModel):
     type: str = "Point"
     coordinates: List[float] = Field(..., description="[Longitude, Latitude]")
-
 
 
 
@@ -111,13 +111,25 @@ class RestaurantsSearchResponse(BaseModel):
         )
         
         
-        
+"""
+The first step when designing a service is finalizing on what is going to be returned
+from the service
+"""
+       
         
 class RestaurantVectorSearchRequest(BaseModel):
-    query:str
-    restaurant_ids:List[str]
+    query: str
+    restaurant_ids: List[str]
     limit: int = 10
-    num_candidates = int = 100
+    num_candidates: int = 100
     
     
+
+class RestaurantSearchResult:
+    """Lightweight wrapper: repository result with dynamic distance metadata."""
+    def __init__(self, entity: 'RestaurantEntity', distance_km: float = 0.0):
+        self.entity = entity
+        self.distance_km = distance_km
+
+
 
