@@ -1,7 +1,7 @@
 """V1 Restaurant Search API endpoints."""
 
 import os
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends, Request
 from openai import AsyncOpenAI
 
 from app.model.restaurants.models import (
@@ -17,17 +17,17 @@ from app.services.restaurant_search_service import RestaurantSearchService
 router = APIRouter(prefix="/api/v1/restaurants", tags=["restaurants"])
 
 
-async def get_restaurant_service(request):
+async def get_restaurant_service(req: Request):
     """Dependency injection for manual search service."""
-    return request.app.restaurant_service
+    return req.app.restaurant_service
 
 
-async def get_vector_search_service(request):
+async def get_vector_search_service(req: Request):
     """Dependency injection for vector search service."""
-    if not hasattr(request.app, 'vector_search_service'):
+    if not hasattr(req.app, 'vector_search_service'):
         openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         embedding_adapter = OpenAIEmbeddingAdapter(client=openai_client, model="text-embedding-3-small")
-        restaurant_repo = request.app.restaurant_repo
+        restaurant_repo = req.app.restaurant_repo
         reranker_adapter = RestaurantRerankerAdapter()
 
         hybrid_search = HybridSearchService(
@@ -35,14 +35,14 @@ async def get_vector_search_service(request):
             vector_repository=restaurant_repo,
             reranker_adapter=reranker_adapter,
         )
-        request.app.vector_search_service = RestaurantSearchService(hybrid_search=hybrid_search)
+        req.app.vector_search_service = RestaurantSearchService(hybrid_search=hybrid_search)
 
-    return request.app.vector_search_service
+    return req.app.vector_search_service
 
 
 @router.post("/search", response_model=list[RestaurantsSearchResponse])
 async def search_restaurants_manual(
-    request: RestaurantSearchRequest,
+    search_request: RestaurantSearchRequest,
     bypass_hours: bool = Query(False, description="Skip service hours check for testing"),
     service=Depends(get_restaurant_service),
 ) -> list[RestaurantsSearchResponse]:
@@ -66,7 +66,7 @@ async def search_restaurants_manual(
     Returns: List of restaurants sorted by match score and distance
     """
     try:
-        results = await service.get_filtered_restaurants(request, bypass_hours=bypass_hours)
+        results = await service.get_filtered_restaurants(search_request, bypass_hours=bypass_hours)
         return results
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
