@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SearchForm from './components/SearchForm';
 import RestaurantCard from './components/RestaurantCard';
 import RestaurantMap from './components/RestaurantMap';
+import VectorSearchChat from './components/VectorSearchChat';
 import { searchRestaurants } from './api/restaurants';
 
 export default function App() {
@@ -41,30 +42,45 @@ export default function App() {
           </div>
         )}
 
-        {/* Results List */}
-        <div className="flex-1 overflow-y-auto">
-          {restaurants.length > 0 ? (
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
-              {restaurants.map((restaurant) => (
-                <RestaurantCard
-                  key={restaurant.restaurant_id}
-                  restaurant={restaurant}
-                  isSelected={selectedRestaurant?.restaurant_id === restaurant.restaurant_id}
-                  onSelect={setSelectedRestaurant}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="p-6 text-center text-gray-500 dark:text-gray-400">
-              {isLoading ? 'Searching...' : 'No restaurants found. Try adjusting your search.'}
-            </div>
-          )}
-        </div>
-
-        {/* Results count */}
+        {/* Vector Search Chat */}
         {restaurants.length > 0 && (
-          <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400">
-            Found {restaurants.length} restaurant{restaurants.length !== 1 ? 's' : ''}
+          <VectorSearchChat
+            restaurants={restaurants}
+            onResults={setRestaurants}
+            isLoading={isLoading}
+          />
+        )}
+
+        {/* Results List */}
+        {restaurants.length > 0 && (
+          <>
+            <div className="px-6 py-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400 font-semibold">
+              Results ({restaurants.length})
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <div className="divide-y divide-gray-200 dark:divide-gray-700">
+                {restaurants.map((restaurant) => (
+                  <RestaurantCard
+                    key={restaurant.restaurant_id}
+                    restaurant={restaurant}
+                    isSelected={selectedRestaurant?.restaurant_id === restaurant.restaurant_id}
+                    onSelect={setSelectedRestaurant}
+                  />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+
+        {restaurants.length === 0 && !isLoading && (
+          <div className="flex-1 p-6 text-center text-gray-500 dark:text-gray-400">
+            No restaurants found. Try adjusting your search.
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="flex-1 p-6 text-center text-gray-500 dark:text-gray-400">
+            Searching...
           </div>
         )}
       </div>
