@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchForm from './components/SearchForm';
 import RestaurantCard from './components/RestaurantCard';
 import RestaurantMap from './components/RestaurantMap';
@@ -12,6 +12,29 @@ export default function App() {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [searchLocation, setSearchLocation] = useState({ latitude: 43.77579, longitude: -79.20664 });
   const [radius, setRadius] = useState(10);
+
+  // Auto-load all restaurants on app start for vector search
+  useEffect(() => {
+    const loadInitialRestaurants = async () => {
+      try {
+        setIsLoading(true);
+        const results = await searchRestaurants({
+          latitude: searchLocation.latitude,
+          longitude: searchLocation.longitude,
+          radius_km: 50, // Large radius to get all restaurants
+          dietary: [],
+          cuisine: [],
+          meal_types: [],
+        });
+        setRestaurants(results);
+      } catch (err) {
+        setError(`Failed to load restaurants: ${err.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadInitialRestaurants();
+  }, []);
 
   const handleSearch = async (formData) => {
     setIsLoading(true);
