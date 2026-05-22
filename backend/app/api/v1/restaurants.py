@@ -88,7 +88,8 @@ async def search_restaurants_vector(
     - limit: Number of final results to return (default: 10)
     - num_candidates: Number of candidates to rerank (default: 100)
 
-    Returns: List of restaurants ranked by semantic relevance and reranking score
+    Returns: List of restaurants ranked by semantic relevance and reranking score.
+    Only includes results with rerank_score >= -2.0 to filter out poor matches.
     """
     try:
         results = await service.search(

@@ -9,8 +9,9 @@ class RestaurantSearchService:
     Converts generic RestaurantSearchResult objects to RestaurantsSearchResponse.
     """
 
-    def __init__(self, hybrid_search: HybridSearchService):
+    def __init__(self, hybrid_search: HybridSearchService, rerank_score_threshold: float = -2.0):
         self.hybrid_search = hybrid_search
+        self.rerank_score_threshold = rerank_score_threshold
 
     async def search(
         self,
@@ -29,12 +30,20 @@ class RestaurantSearchService:
 
         Returns:
             List of RestaurantsSearchResponse objects with ranking scores
+            Only returns results with rerank_score >= threshold
         """
         restaurant_results = await self.hybrid_search.search(query, restaurant_ids, limit, num_candidates)
 
         # Convert RestaurantSearchResult objects to API response format
+        # Filter by rerank score threshold to avoid poor matches
         responses = []
         for result in restaurant_results:
+            rerank_score = getattr(result, 'rerank_score', 0)
+
+            # Skip results below threshold
+            if rerank_score < self.rerank_score_threshold:
+                continue
+
             # result.entity is RestaurantEntity
             # result.distance_km is float
             # result.rerank_score is float (added by reranker)
