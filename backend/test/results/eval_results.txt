@@ -1,0 +1,3317 @@
+Loading .env environment variables...
+Warning: Your Pipfile requires "python_version" 3.13, but you are using 3.11.0 
+from /Users/a/.local/share/v/b/bin/python.
+$ pipenv --rm and rebuilding the virtual environment may resolve the issue.
+$ pipenv check will surely fail.
+
+✅ Test environment loaded:
+   Database: vybe
+   MongoDB: Connected to Atlas cluster
+============================= test session starts ==============================
+platform darwin -- Python 3.11.0, pytest-9.0.3, pluggy-1.6.0 -- /Users/anmolsagarshrestha/.local/share/virtualenvs/backend-PAJn2llU/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/anmolsagarshrestha/radiocalico/backend
+configfile: pytest.ini
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 16 items
+
+test/test_restaurant_eval.py::test_search_quality_evals[case0] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8226.74it/s]
+
+======================================================================
+📊 TC1.1: Vegan Options
+Query: 'looking for vegan food'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'looking for vegan food'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_13        Green Garden Bistro                     
+2      restaurant_2         Vegan Kitchen                           
+3      restaurant_1         24hr Vegan Diner                        
+4      restaurant_3         Purely Vegan Hub                        
+5      restaurant_4         The Green Leaf Bistro                   
+6      restaurant_17        The Gluten-Free Haven                   
+7      restaurant_21        Tropical Smoothie Bowl Café             
+8      restaurant_7         The Kosher Deli                         
+9      restaurant_6         Sultan’s Halal Kitchen                  
+10     restaurant_19        Bubble Tea Paradise                     
+11     restaurant_16        Street Tacos Express                    
+12     restaurant_11        Spice & Rhythm Indian Kitchen           
+13     restaurant_5         Standard Grill & Bar                    
+14     restaurant_9         The Cozy Study Cafe                     
+15     restaurant_14        Family Feast Pizzeria                   
+16     restaurant_12        The Night Owl Diner                     
+17     restaurant_18        The Jazz Corner Bar & Grill             
+18     restaurant_10        Sunday Brunch House                     
+19     restaurant_8         Sky & Stars Rooftop Lounge              
+20     restaurant_20        The Steakhouse Prime                    
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'looking for vegan food'
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_13] Score: -2.4966
+[restaurant_2] Score: 1.6599
+[restaurant_1] Score: -4.2124
+[restaurant_3] Score: 2.0076
+[restaurant_4] Score: -3.1533
+[restaurant_17] Score: -8.8868
+[restaurant_21] Score: -4.6001
+[restaurant_7] Score: -10.7131
+[restaurant_6] Score: -10.8982
+[restaurant_19] Score: -5.1618
+[restaurant_16] Score: -7.8760
+[restaurant_11] Score: -6.9158
+[restaurant_5] Score: -11.0017
+[restaurant_9] Score: -5.0287
+[restaurant_14] Score: -10.2092
+[restaurant_12] Score: -9.1016
+[restaurant_18] Score: -8.9744
+[restaurant_10] Score: -9.3353
+[restaurant_8] Score: -8.5266
+[restaurant_20] Score: -10.9912
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_3         Purely Vegan Hub                         2.0076          0.00           
+2      restaurant_2         Vegan Kitchen                            1.6599          0.00           
+3      restaurant_13        Green Garden Bistro                      -2.4966         0.00           
+4      restaurant_4         The Green Leaf Bistro                    -3.1533         0.00           
+5      restaurant_1         24hr Vegan Diner                         -4.2124         0.00           
+6      restaurant_21        Tropical Smoothie Bowl Café              -4.6001         0.00           
+7      restaurant_9         The Cozy Study Cafe                      -5.0287         0.00           
+8      restaurant_19        Bubble Tea Paradise                      -5.1618         0.00           
+9      restaurant_11        Spice & Rhythm Indian Kitchen            -6.9158         0.00           
+10     restaurant_16        Street Tacos Express                     -7.8760         0.00           
+11     restaurant_8         Sky & Stars Rooftop Lounge               -8.5266         0.00           
+12     restaurant_17        The Gluten-Free Haven                    -8.8868         0.00           
+13     restaurant_18        The Jazz Corner Bar & Grill              -8.9744         0.00           
+14     restaurant_12        The Night Owl Diner                      -9.1016         0.00           
+15     restaurant_10        Sunday Brunch House                      -9.3353         0.00           
+16     restaurant_14        Family Feast Pizzeria                    -10.2092        0.00           
+17     restaurant_7         The Kosher Deli                          -10.7131        0.00           
+18     restaurant_6         Sultan’s Halal Kitchen                   -10.8982        0.00           
+19     restaurant_20        The Steakhouse Prime                     -10.9912        0.00           
+20     restaurant_5         Standard Grill & Bar                     -11.0017        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 2689.05ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Green Garden Bistro', 'Purely Vegan Hub', '24hr Vegan Diner']
+Actual Top 3 IDs: ['Purely Vegan Hub', 'Vegan Kitchen', 'Green Garden Bistro']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.67
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      0.89
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case1] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9618.91it/s]
+
+======================================================================
+📊 TC1.2: Halal Food
+Query: 'I want halal certified food'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'I want halal certified food'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_6         Sultan’s Halal Kitchen                  
+2      restaurant_17        The Gluten-Free Haven                   
+3      restaurant_7         The Kosher Deli                         
+4      restaurant_13        Green Garden Bistro                     
+5      restaurant_3         Purely Vegan Hub                        
+6      restaurant_1         24hr Vegan Diner                        
+7      restaurant_4         The Green Leaf Bistro                   
+8      restaurant_16        Street Tacos Express                    
+9      restaurant_2         Vegan Kitchen                           
+10     restaurant_5         Standard Grill & Bar                    
+11     restaurant_15        The Sushi Master                        
+12     restaurant_11        Spice & Rhythm Indian Kitchen           
+13     restaurant_21        Tropical Smoothie Bowl Café             
+14     restaurant_20        The Steakhouse Prime                    
+15     restaurant_19        Bubble Tea Paradise                     
+16     restaurant_14        Family Feast Pizzeria                   
+17     restaurant_12        The Night Owl Diner                     
+18     restaurant_18        The Jazz Corner Bar & Grill             
+19     restaurant_10        Sunday Brunch House                     
+20     restaurant_8         Sky & Stars Rooftop Lounge              
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'I want halal certified food'
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_6] Score: 3.3605
+[restaurant_17] Score: -9.5845
+[restaurant_7] Score: -10.7402
+[restaurant_13] Score: -11.2106
+[restaurant_3] Score: -11.0221
+[restaurant_1] Score: -11.2810
+[restaurant_4] Score: -11.1236
+[restaurant_16] Score: -11.2253
+[restaurant_2] Score: -11.0321
+[restaurant_5] Score: -11.2703
+[restaurant_15] Score: -11.3090
+[restaurant_11] Score: -11.2534
+[restaurant_21] Score: -11.2579
+[restaurant_20] Score: -11.2529
+[restaurant_19] Score: -11.3278
+[restaurant_14] Score: -11.3254
+[restaurant_12] Score: -11.2935
+[restaurant_18] Score: -11.2887
+[restaurant_10] Score: -11.2378
+[restaurant_8] Score: -11.3071
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_6         Sultan’s Halal Kitchen                   3.3605          0.00           
+2      restaurant_17        The Gluten-Free Haven                    -9.5845         0.00           
+3      restaurant_7         The Kosher Deli                          -10.7402        0.00           
+4      restaurant_3         Purely Vegan Hub                         -11.0221        0.00           
+5      restaurant_2         Vegan Kitchen                            -11.0321        0.00           
+6      restaurant_4         The Green Leaf Bistro                    -11.1236        0.00           
+7      restaurant_13        Green Garden Bistro                      -11.2106        0.00           
+8      restaurant_16        Street Tacos Express                     -11.2253        0.00           
+9      restaurant_10        Sunday Brunch House                      -11.2378        0.00           
+10     restaurant_20        The Steakhouse Prime                     -11.2529        0.00           
+11     restaurant_11        Spice & Rhythm Indian Kitchen            -11.2534        0.00           
+12     restaurant_21        Tropical Smoothie Bowl Café              -11.2579        0.00           
+13     restaurant_5         Standard Grill & Bar                     -11.2703        0.00           
+14     restaurant_1         24hr Vegan Diner                         -11.2810        0.00           
+15     restaurant_18        The Jazz Corner Bar & Grill              -11.2887        0.00           
+16     restaurant_12        The Night Owl Diner                      -11.2935        0.00           
+17     restaurant_8         Sky & Stars Rooftop Lounge               -11.3071        0.00           
+18     restaurant_15        The Sushi Master                         -11.3090        0.00           
+19     restaurant_14        Family Feast Pizzeria                    -11.3254        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -11.3278        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1452.54ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ["Sultan's Halal Kitchen"]
+Actual Top 3 IDs: ["Sultan's Halal Kitchen", 'The Gluten-Free Haven', 'The Kosher Deli']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case2] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8237.82it/s]
+
+======================================================================
+📊 TC1.3: Indian Food
+Query: 'Indian restaurant with vegetarian options'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'Indian restaurant with vegetarian options'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_13        Green Garden Bistro                     
+2      restaurant_4         The Green Leaf Bistro                   
+3      restaurant_11        Spice & Rhythm Indian Kitchen           
+4      restaurant_1         24hr Vegan Diner                        
+5      restaurant_2         Vegan Kitchen                           
+6      restaurant_6         Sultan’s Halal Kitchen                  
+7      restaurant_3         Purely Vegan Hub                        
+8      restaurant_14        Family Feast Pizzeria                   
+9      restaurant_17        The Gluten-Free Haven                   
+10     restaurant_5         Standard Grill & Bar                    
+11     restaurant_8         Sky & Stars Rooftop Lounge              
+12     restaurant_7         The Kosher Deli                         
+13     restaurant_10        Sunday Brunch House                     
+14     restaurant_12        The Night Owl Diner                     
+15     restaurant_19        Bubble Tea Paradise                     
+16     restaurant_15        The Sushi Master                        
+17     restaurant_18        The Jazz Corner Bar & Grill             
+18     restaurant_20        The Steakhouse Prime                    
+19     restaurant_21        Tropical Smoothie Bowl Café             
+20     restaurant_16        Street Tacos Express                    
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'Indian restaurant with vegetarian options'
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_13] Score: -1.0418
+[restaurant_4] Score: -0.6551
+[restaurant_11] Score: 6.3861
+[restaurant_1] Score: -2.5276
+[restaurant_2] Score: -3.8304
+[restaurant_6] Score: -10.1323
+[restaurant_3] Score: -4.4444
+[restaurant_14] Score: -6.3856
+[restaurant_17] Score: -5.7039
+[restaurant_5] Score: -10.1645
+[restaurant_8] Score: -6.3497
+[restaurant_7] Score: -8.7665
+[restaurant_10] Score: -5.0618
+[restaurant_12] Score: -5.2580
+[restaurant_19] Score: -6.9844
+[restaurant_15] Score: -9.4788
+[restaurant_18] Score: -5.5183
+[restaurant_20] Score: -10.4322
+[restaurant_21] Score: -3.6418
+[restaurant_16] Score: -4.2514
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_11        Spice & Rhythm Indian Kitchen            6.3861          0.00           
+2      restaurant_4         The Green Leaf Bistro                    -0.6551         0.00           
+3      restaurant_13        Green Garden Bistro                      -1.0418         0.00           
+4      restaurant_1         24hr Vegan Diner                         -2.5276         0.00           
+5      restaurant_21        Tropical Smoothie Bowl Café              -3.6418         0.00           
+6      restaurant_2         Vegan Kitchen                            -3.8304         0.00           
+7      restaurant_16        Street Tacos Express                     -4.2514         0.00           
+8      restaurant_3         Purely Vegan Hub                         -4.4444         0.00           
+9      restaurant_10        Sunday Brunch House                      -5.0618         0.00           
+10     restaurant_12        The Night Owl Diner                      -5.2580         0.00           
+11     restaurant_18        The Jazz Corner Bar & Grill              -5.5183         0.00           
+12     restaurant_17        The Gluten-Free Haven                    -5.7039         0.00           
+13     restaurant_8         Sky & Stars Rooftop Lounge               -6.3497         0.00           
+14     restaurant_14        Family Feast Pizzeria                    -6.3856         0.00           
+15     restaurant_19        Bubble Tea Paradise                      -6.9844         0.00           
+16     restaurant_7         The Kosher Deli                          -8.7665         0.00           
+17     restaurant_15        The Sushi Master                         -9.4788         0.00           
+18     restaurant_6         Sultan’s Halal Kitchen                   -10.1323        0.00           
+19     restaurant_5         Standard Grill & Bar                     -10.1645        0.00           
+20     restaurant_20        The Steakhouse Prime                     -10.4322        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1439.41ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Spice & Rhythm Indian Kitchen']
+Actual Top 3 IDs: ['Spice & Rhythm Indian Kitchen', 'The Green Leaf Bistro', 'Green Garden Bistro']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case3] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 14772.64it/s]
+
+======================================================================
+📊 TC1.4: Japanese/Sushi
+Query: 'sushi or Japanese cuisine'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'sushi or Japanese cuisine'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_15        The Sushi Master                        
+2      restaurant_11        Spice & Rhythm Indian Kitchen           
+3      restaurant_20        The Steakhouse Prime                    
+4      restaurant_16        Street Tacos Express                    
+5      restaurant_6         Sultan’s Halal Kitchen                  
+6      restaurant_18        The Jazz Corner Bar & Grill             
+7      restaurant_13        Green Garden Bistro                     
+8      restaurant_7         The Kosher Deli                         
+9      restaurant_2         Vegan Kitchen                           
+10     restaurant_21        Tropical Smoothie Bowl Café             
+11     restaurant_14        Family Feast Pizzeria                   
+12     restaurant_4         The Green Leaf Bistro                   
+13     restaurant_8         Sky & Stars Rooftop Lounge              
+14     restaurant_5         Standard Grill & Bar                    
+15     restaurant_19        Bubble Tea Paradise                     
+16     restaurant_3         Purely Vegan Hub                        
+17     restaurant_1         24hr Vegan Diner                        
+18     restaurant_17        The Gluten-Free Haven                   
+19     restaurant_10        Sunday Brunch House                     
+20     restaurant_9         The Cozy Study Cafe                     
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'sushi or Japanese cuisine'
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_15] Score: 2.7701
+[restaurant_11] Score: -10.3991
+[restaurant_20] Score: -10.8590
+[restaurant_16] Score: -10.6849
+[restaurant_6] Score: -10.2481
+[restaurant_18] Score: -10.8815
+[restaurant_13] Score: -10.7619
+[restaurant_7] Score: -9.8864
+[restaurant_2] Score: -9.5867
+[restaurant_21] Score: -10.7671
+[restaurant_14] Score: -10.8057
+[restaurant_4] Score: -10.1878
+[restaurant_8] Score: -10.6689
+[restaurant_5] Score: -10.9005
+[restaurant_19] Score: -10.9874
+[restaurant_3] Score: -9.8324
+[restaurant_1] Score: -10.9225
+[restaurant_17] Score: -10.9181
+[restaurant_10] Score: -10.8128
+[restaurant_9] Score: -10.8949
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_15        The Sushi Master                         2.7701          0.00           
+2      restaurant_2         Vegan Kitchen                            -9.5867         0.00           
+3      restaurant_3         Purely Vegan Hub                         -9.8324         0.00           
+4      restaurant_7         The Kosher Deli                          -9.8864         0.00           
+5      restaurant_4         The Green Leaf Bistro                    -10.1878        0.00           
+6      restaurant_6         Sultan’s Halal Kitchen                   -10.2481        0.00           
+7      restaurant_11        Spice & Rhythm Indian Kitchen            -10.3991        0.00           
+8      restaurant_8         Sky & Stars Rooftop Lounge               -10.6689        0.00           
+9      restaurant_16        Street Tacos Express                     -10.6849        0.00           
+10     restaurant_13        Green Garden Bistro                      -10.7619        0.00           
+11     restaurant_21        Tropical Smoothie Bowl Café              -10.7671        0.00           
+12     restaurant_14        Family Feast Pizzeria                    -10.8057        0.00           
+13     restaurant_10        Sunday Brunch House                      -10.8128        0.00           
+14     restaurant_20        The Steakhouse Prime                     -10.8590        0.00           
+15     restaurant_18        The Jazz Corner Bar & Grill              -10.8815        0.00           
+16     restaurant_9         The Cozy Study Cafe                      -10.8949        0.00           
+17     restaurant_5         Standard Grill & Bar                     -10.9005        0.00           
+18     restaurant_17        The Gluten-Free Haven                    -10.9181        0.00           
+19     restaurant_1         24hr Vegan Diner                         -10.9225        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -10.9874        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 2134.05ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['The Sushi Master']
+Actual Top 3 IDs: ['The Sushi Master', 'Vegan Kitchen', 'Purely Vegan Hub']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case4] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8165.42it/s]
+
+======================================================================
+📊 TC2.1: Romantic Date Night
+Query: 'romantic date night spot with atmosphere'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'romantic date night spot with atmosphere'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_8         Sky & Stars Rooftop Lounge              
+2      restaurant_18        The Jazz Corner Bar & Grill             
+3      restaurant_12        The Night Owl Diner                     
+4      restaurant_15        The Sushi Master                        
+5      restaurant_5         Standard Grill & Bar                    
+6      restaurant_20        The Steakhouse Prime                    
+7      restaurant_11        Spice & Rhythm Indian Kitchen           
+8      restaurant_9         The Cozy Study Cafe                     
+9      restaurant_14        Family Feast Pizzeria                   
+10     restaurant_19        Bubble Tea Paradise                     
+11     restaurant_3         Purely Vegan Hub                        
+12     restaurant_13        Green Garden Bistro                     
+13     restaurant_1         24hr Vegan Diner                        
+14     restaurant_4         The Green Leaf Bistro                   
+15     restaurant_2         Vegan Kitchen                           
+16     restaurant_10        Sunday Brunch House                     
+17     restaurant_16        Street Tacos Express                    
+18     restaurant_17        The Gluten-Free Haven                   
+19     restaurant_21        Tropical Smoothie Bowl Café             
+20     restaurant_7         The Kosher Deli                         
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'romantic date night spot with atmosphere'
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_8] Score: -4.1924
+[restaurant_18] Score: -8.7362
+[restaurant_12] Score: -11.3543
+[restaurant_15] Score: -11.3718
+[restaurant_5] Score: -11.3834
+[restaurant_20] Score: -11.3961
+[restaurant_11] Score: -11.4040
+[restaurant_9] Score: -11.3916
+[restaurant_14] Score: -11.4133
+[restaurant_19] Score: -11.4141
+[restaurant_3] Score: -11.2678
+[restaurant_13] Score: -11.3755
+[restaurant_1] Score: -11.4232
+[restaurant_4] Score: -11.3632
+[restaurant_2] Score: -11.2931
+[restaurant_10] Score: -11.2984
+[restaurant_16] Score: -11.3791
+[restaurant_17] Score: -11.3973
+[restaurant_21] Score: -11.3768
+[restaurant_7] Score: -11.3797
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_8         Sky & Stars Rooftop Lounge               -4.1924         0.00           
+2      restaurant_18        The Jazz Corner Bar & Grill              -8.7362         0.00           
+3      restaurant_3         Purely Vegan Hub                         -11.2678        0.00           
+4      restaurant_2         Vegan Kitchen                            -11.2931        0.00           
+5      restaurant_10        Sunday Brunch House                      -11.2984        0.00           
+6      restaurant_12        The Night Owl Diner                      -11.3543        0.00           
+7      restaurant_4         The Green Leaf Bistro                    -11.3632        0.00           
+8      restaurant_15        The Sushi Master                         -11.3718        0.00           
+9      restaurant_13        Green Garden Bistro                      -11.3755        0.00           
+10     restaurant_21        Tropical Smoothie Bowl Café              -11.3768        0.00           
+11     restaurant_16        Street Tacos Express                     -11.3791        0.00           
+12     restaurant_7         The Kosher Deli                          -11.3797        0.00           
+13     restaurant_5         Standard Grill & Bar                     -11.3834        0.00           
+14     restaurant_9         The Cozy Study Cafe                      -11.3916        0.00           
+15     restaurant_20        The Steakhouse Prime                     -11.3961        0.00           
+16     restaurant_17        The Gluten-Free Haven                    -11.3973        0.00           
+17     restaurant_11        Spice & Rhythm Indian Kitchen            -11.4040        0.00           
+18     restaurant_14        Family Feast Pizzeria                    -11.4133        0.00           
+19     restaurant_19        Bubble Tea Paradise                      -11.4141        0.00           
+20     restaurant_1         24hr Vegan Diner                         -11.4232        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1672.97ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Sky & Stars Rooftop Lounge', 'The Sushi Master', 'The Jazz Corner Bar & Grill']
+Actual Top 3 IDs: ['Sky & Stars Rooftop Lounge', 'The Jazz Corner Bar & Grill', 'Purely Vegan Hub']
+
+Metrics:
+  Precision@1: 1.00 (min: 0.66)
+  Precision@3: 0.67
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    0.67
+  NDCG@5:      0.77
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case5] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9555.05it/s]
+
+======================================================================
+📊 TC2.2: Group Celebrations
+Query: 'best place for group celebrations and parties'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'best place for group celebrations and parties'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_14        Family Feast Pizzeria                   
+2      restaurant_19        Bubble Tea Paradise                     
+3      restaurant_11        Spice & Rhythm Indian Kitchen           
+4      restaurant_8         Sky & Stars Rooftop Lounge              
+5      restaurant_10        Sunday Brunch House                     
+6      restaurant_18        The Jazz Corner Bar & Grill             
+7      restaurant_5         Standard Grill & Bar                    
+8      restaurant_17        The Gluten-Free Haven                   
+9      restaurant_21        Tropical Smoothie Bowl Café             
+10     restaurant_13        Green Garden Bistro                     
+11     restaurant_6         Sultan’s Halal Kitchen                  
+12     restaurant_3         Purely Vegan Hub                        
+13     restaurant_4         The Green Leaf Bistro                   
+14     restaurant_20        The Steakhouse Prime                    
+15     restaurant_1         24hr Vegan Diner                        
+16     restaurant_9         The Cozy Study Cafe                     
+17     restaurant_7         The Kosher Deli                         
+18     restaurant_2         Vegan Kitchen                           
+19     restaurant_15        The Sushi Master                        
+20     restaurant_12        The Night Owl Diner                     
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'best place for group celebrations and parties'
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_14] Score: -2.6659
+[restaurant_19] Score: -11.2531
+[restaurant_11] Score: -10.8408
+[restaurant_8] Score: -5.6590
+[restaurant_10] Score: -11.1524
+[restaurant_18] Score: -8.6949
+[restaurant_5] Score: -11.2151
+[restaurant_17] Score: -11.2606
+[restaurant_21] Score: -11.2056
+[restaurant_13] Score: -11.2331
+[restaurant_6] Score: -11.2391
+[restaurant_3] Score: -10.7387
+[restaurant_4] Score: -10.6361
+[restaurant_20] Score: -11.2000
+[restaurant_1] Score: -11.2962
+[restaurant_9] Score: -11.0867
+[restaurant_7] Score: -11.1801
+[restaurant_2] Score: -10.8217
+[restaurant_15] Score: -11.0554
+[restaurant_12] Score: -11.2291
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_14        Family Feast Pizzeria                    -2.6659         0.00           
+2      restaurant_8         Sky & Stars Rooftop Lounge               -5.6590         0.00           
+3      restaurant_18        The Jazz Corner Bar & Grill              -8.6949         0.00           
+4      restaurant_4         The Green Leaf Bistro                    -10.6361        0.00           
+5      restaurant_3         Purely Vegan Hub                         -10.7387        0.00           
+6      restaurant_2         Vegan Kitchen                            -10.8217        0.00           
+7      restaurant_11        Spice & Rhythm Indian Kitchen            -10.8408        0.00           
+8      restaurant_15        The Sushi Master                         -11.0554        0.00           
+9      restaurant_9         The Cozy Study Cafe                      -11.0867        0.00           
+10     restaurant_10        Sunday Brunch House                      -11.1524        0.00           
+11     restaurant_7         The Kosher Deli                          -11.1801        0.00           
+12     restaurant_20        The Steakhouse Prime                     -11.2000        0.00           
+13     restaurant_21        Tropical Smoothie Bowl Café              -11.2056        0.00           
+14     restaurant_5         Standard Grill & Bar                     -11.2151        0.00           
+15     restaurant_12        The Night Owl Diner                      -11.2291        0.00           
+16     restaurant_13        Green Garden Bistro                      -11.2331        0.00           
+17     restaurant_6         Sultan’s Halal Kitchen                   -11.2391        0.00           
+18     restaurant_19        Bubble Tea Paradise                      -11.2531        0.00           
+19     restaurant_17        The Gluten-Free Haven                    -11.2606        0.00           
+20     restaurant_1         24hr Vegan Diner                         -11.2962        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1604.64ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Family Feast Pizzeria', 'Spice & Rhythm Indian Kitchen']
+Actual Top 3 IDs: ['Family Feast Pizzeria', 'Sky & Stars Rooftop Lounge', 'The Jazz Corner Bar & Grill']
+
+Metrics:
+  Precision@1: 1.00 (min: 0.66)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    0.50
+  NDCG@5:      0.61
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case6] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9056.36it/s]
+
+======================================================================
+📊 TC2.3: Work/Study Cafe
+Query: 'quiet place to work or study with good coffee'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'quiet place to work or study with good coffee'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_9         The Cozy Study Cafe                     
+2      restaurant_19        Bubble Tea Paradise                     
+3      restaurant_18        The Jazz Corner Bar & Grill             
+4      restaurant_4         The Green Leaf Bistro                   
+5      restaurant_12        The Night Owl Diner                     
+6      restaurant_17        The Gluten-Free Haven                   
+7      restaurant_21        Tropical Smoothie Bowl Café             
+8      restaurant_10        Sunday Brunch House                     
+9      restaurant_13        Green Garden Bistro                     
+10     restaurant_8         Sky & Stars Rooftop Lounge              
+11     restaurant_3         Purely Vegan Hub                        
+12     restaurant_1         24hr Vegan Diner                        
+13     restaurant_15        The Sushi Master                        
+14     restaurant_2         Vegan Kitchen                           
+15     restaurant_7         The Kosher Deli                         
+16     restaurant_16        Street Tacos Express                    
+17     restaurant_11        Spice & Rhythm Indian Kitchen           
+18     restaurant_20        The Steakhouse Prime                    
+19     restaurant_14        Family Feast Pizzeria                   
+20     restaurant_5         Standard Grill & Bar                    
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'quiet place to work or study with good coffee'
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_9] Score: 5.0660
+[restaurant_19] Score: -11.4080
+[restaurant_18] Score: -11.3450
+[restaurant_4] Score: -11.3745
+[restaurant_12] Score: -11.3831
+[restaurant_17] Score: -11.4240
+[restaurant_21] Score: -11.3887
+[restaurant_10] Score: -11.3290
+[restaurant_13] Score: -11.3908
+[restaurant_8] Score: -11.3527
+[restaurant_3] Score: -11.3961
+[restaurant_1] Score: -11.4224
+[restaurant_15] Score: -11.3530
+[restaurant_2] Score: -11.3783
+[restaurant_7] Score: -11.3649
+[restaurant_16] Score: -11.3390
+[restaurant_11] Score: -11.3878
+[restaurant_20] Score: -11.3775
+[restaurant_14] Score: -11.3455
+[restaurant_5] Score: -11.3847
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_9         The Cozy Study Cafe                      5.0660          0.00           
+2      restaurant_10        Sunday Brunch House                      -11.3290        0.00           
+3      restaurant_16        Street Tacos Express                     -11.3390        0.00           
+4      restaurant_18        The Jazz Corner Bar & Grill              -11.3450        0.00           
+5      restaurant_14        Family Feast Pizzeria                    -11.3455        0.00           
+6      restaurant_8         Sky & Stars Rooftop Lounge               -11.3527        0.00           
+7      restaurant_15        The Sushi Master                         -11.3530        0.00           
+8      restaurant_7         The Kosher Deli                          -11.3649        0.00           
+9      restaurant_4         The Green Leaf Bistro                    -11.3745        0.00           
+10     restaurant_20        The Steakhouse Prime                     -11.3775        0.00           
+11     restaurant_2         Vegan Kitchen                            -11.3783        0.00           
+12     restaurant_12        The Night Owl Diner                      -11.3831        0.00           
+13     restaurant_5         Standard Grill & Bar                     -11.3847        0.00           
+14     restaurant_11        Spice & Rhythm Indian Kitchen            -11.3878        0.00           
+15     restaurant_21        Tropical Smoothie Bowl Café              -11.3887        0.00           
+16     restaurant_13        Green Garden Bistro                      -11.3908        0.00           
+17     restaurant_3         Purely Vegan Hub                         -11.3961        0.00           
+18     restaurant_19        Bubble Tea Paradise                      -11.4080        0.00           
+19     restaurant_1         24hr Vegan Diner                         -11.4224        0.00           
+20     restaurant_17        The Gluten-Free Haven                    -11.4240        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1586.97ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['The Cozy Study Cafe']
+Actual Top 3 IDs: ['The Cozy Study Cafe', 'Sunday Brunch House', 'Street Tacos Express']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case7] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8282.75it/s]
+
+======================================================================
+📊 TC3.1: Late Night 24/7
+Query: 'open 24 hours late night food'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'open 24 hours late night food'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_12        The Night Owl Diner                     
+2      restaurant_1         24hr Vegan Diner                        
+3      restaurant_5         Standard Grill & Bar                    
+4      restaurant_3         Purely Vegan Hub                        
+5      restaurant_2         Vegan Kitchen                           
+6      restaurant_16        Street Tacos Express                    
+7      restaurant_18        The Jazz Corner Bar & Grill             
+8      restaurant_8         Sky & Stars Rooftop Lounge              
+9      restaurant_15        The Sushi Master                        
+10     restaurant_14        Family Feast Pizzeria                   
+11     restaurant_7         The Kosher Deli                         
+12     restaurant_6         Sultan’s Halal Kitchen                  
+13     restaurant_10        Sunday Brunch House                     
+14     restaurant_19        Bubble Tea Paradise                     
+15     restaurant_17        The Gluten-Free Haven                   
+16     restaurant_11        Spice & Rhythm Indian Kitchen           
+17     restaurant_13        Green Garden Bistro                     
+18     restaurant_4         The Green Leaf Bistro                   
+19     restaurant_21        Tropical Smoothie Bowl Café             
+20     restaurant_9         The Cozy Study Cafe                     
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'open 24 hours late night food'
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_12] Score: 6.1521
+[restaurant_1] Score: 4.9888
+[restaurant_5] Score: -3.4748
+[restaurant_3] Score: -2.9064
+[restaurant_2] Score: -3.1081
+[restaurant_16] Score: -10.9722
+[restaurant_18] Score: -2.3212
+[restaurant_8] Score: -3.9955
+[restaurant_15] Score: -3.0222
+[restaurant_14] Score: -11.2193
+[restaurant_7] Score: -11.0738
+[restaurant_6] Score: -11.1935
+[restaurant_10] Score: -10.0967
+[restaurant_19] Score: -11.2021
+[restaurant_17] Score: -11.0837
+[restaurant_11] Score: -1.9123
+[restaurant_13] Score: -11.0436
+[restaurant_4] Score: -10.4206
+[restaurant_21] Score: -11.1840
+[restaurant_9] Score: -10.9828
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_12        The Night Owl Diner                      6.1521          0.00           
+2      restaurant_1         24hr Vegan Diner                         4.9888          0.00           
+3      restaurant_11        Spice & Rhythm Indian Kitchen            -1.9123         0.00           
+4      restaurant_18        The Jazz Corner Bar & Grill              -2.3212         0.00           
+5      restaurant_3         Purely Vegan Hub                         -2.9064         0.00           
+6      restaurant_15        The Sushi Master                         -3.0222         0.00           
+7      restaurant_2         Vegan Kitchen                            -3.1081         0.00           
+8      restaurant_5         Standard Grill & Bar                     -3.4748         0.00           
+9      restaurant_8         Sky & Stars Rooftop Lounge               -3.9955         0.00           
+10     restaurant_10        Sunday Brunch House                      -10.0967        0.00           
+11     restaurant_4         The Green Leaf Bistro                    -10.4206        0.00           
+12     restaurant_16        Street Tacos Express                     -10.9722        0.00           
+13     restaurant_9         The Cozy Study Cafe                      -10.9828        0.00           
+14     restaurant_13        Green Garden Bistro                      -11.0436        0.00           
+15     restaurant_7         The Kosher Deli                          -11.0738        0.00           
+16     restaurant_17        The Gluten-Free Haven                    -11.0837        0.00           
+17     restaurant_21        Tropical Smoothie Bowl Café              -11.1840        0.00           
+18     restaurant_6         Sultan’s Halal Kitchen                   -11.1935        0.00           
+19     restaurant_19        Bubble Tea Paradise                      -11.2021        0.00           
+20     restaurant_14        Family Feast Pizzeria                    -11.2193        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1543.35ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['24hr Vegan Diner', 'The Night Owl Diner']
+Actual Top 3 IDs: ['The Night Owl Diner', '24hr Vegan Diner', 'Spice & Rhythm Indian Kitchen']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.67
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case8] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9459.41it/s]
+
+======================================================================
+📊 TC3.2: Breakfast/Brunch
+Query: 'best breakfast or brunch spot'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'best breakfast or brunch spot'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_10        Sunday Brunch House                     
+2      restaurant_21        Tropical Smoothie Bowl Café             
+3      restaurant_12        The Night Owl Diner                     
+4      restaurant_19        Bubble Tea Paradise                     
+5      restaurant_9         The Cozy Study Cafe                     
+6      restaurant_17        The Gluten-Free Haven                   
+7      restaurant_7         The Kosher Deli                         
+8      restaurant_5         Standard Grill & Bar                    
+9      restaurant_3         Purely Vegan Hub                        
+10     restaurant_8         Sky & Stars Rooftop Lounge              
+11     restaurant_1         24hr Vegan Diner                        
+12     restaurant_2         Vegan Kitchen                           
+13     restaurant_18        The Jazz Corner Bar & Grill             
+14     restaurant_4         The Green Leaf Bistro                   
+15     restaurant_14        Family Feast Pizzeria                   
+16     restaurant_13        Green Garden Bistro                     
+17     restaurant_16        Street Tacos Express                    
+18     restaurant_20        The Steakhouse Prime                    
+19     restaurant_15        The Sushi Master                        
+20     restaurant_11        Spice & Rhythm Indian Kitchen           
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'best breakfast or brunch spot'
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_10] Score: 1.9169
+[restaurant_21] Score: -1.1238
+[restaurant_12] Score: -8.2198
+[restaurant_19] Score: -6.7223
+[restaurant_9] Score: 0.1122
+[restaurant_17] Score: -1.3746
+[restaurant_7] Score: -3.1465
+[restaurant_5] Score: -10.7259
+[restaurant_3] Score: 0.8487
+[restaurant_8] Score: -10.3840
+[restaurant_1] Score: -9.5497
+[restaurant_2] Score: 0.1961
+[restaurant_18] Score: -10.5518
+[restaurant_4] Score: -9.1850
+[restaurant_14] Score: -10.6367
+[restaurant_13] Score: -10.4126
+[restaurant_16] Score: -9.9716
+[restaurant_20] Score: -10.6912
+[restaurant_15] Score: -10.7584
+[restaurant_11] Score: -10.1108
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_10        Sunday Brunch House                      1.9169          0.00           
+2      restaurant_3         Purely Vegan Hub                         0.8487          0.00           
+3      restaurant_2         Vegan Kitchen                            0.1961          0.00           
+4      restaurant_9         The Cozy Study Cafe                      0.1122          0.00           
+5      restaurant_21        Tropical Smoothie Bowl Café              -1.1238         0.00           
+6      restaurant_17        The Gluten-Free Haven                    -1.3746         0.00           
+7      restaurant_7         The Kosher Deli                          -3.1465         0.00           
+8      restaurant_19        Bubble Tea Paradise                      -6.7223         0.00           
+9      restaurant_12        The Night Owl Diner                      -8.2198         0.00           
+10     restaurant_4         The Green Leaf Bistro                    -9.1850         0.00           
+11     restaurant_1         24hr Vegan Diner                         -9.5497         0.00           
+12     restaurant_16        Street Tacos Express                     -9.9716         0.00           
+13     restaurant_11        Spice & Rhythm Indian Kitchen            -10.1108        0.00           
+14     restaurant_8         Sky & Stars Rooftop Lounge               -10.3840        0.00           
+15     restaurant_13        Green Garden Bistro                      -10.4126        0.00           
+16     restaurant_18        The Jazz Corner Bar & Grill              -10.5518        0.00           
+17     restaurant_14        Family Feast Pizzeria                    -10.6367        0.00           
+18     restaurant_20        The Steakhouse Prime                     -10.6912        0.00           
+19     restaurant_5         Standard Grill & Bar                     -10.7259        0.00           
+20     restaurant_15        The Sushi Master                         -10.7584        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 2404.75ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Sunday Brunch House', 'The Cozy Study Cafe']
+Actual Top 3 IDs: ['Sunday Brunch House', 'Purely Vegan Hub', 'Vegan Kitchen']
+
+Metrics:
+  Precision@1: 1.00 (min: 0.66)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    1.00
+  NDCG@5:      0.88
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case9] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9806.76it/s]
+
+======================================================================
+📊 TC4.1: Live Music
+Query: 'restaurant with live music venue'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'restaurant with live music venue'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_18        The Jazz Corner Bar & Grill             
+2      restaurant_11        Spice & Rhythm Indian Kitchen           
+3      restaurant_8         Sky & Stars Rooftop Lounge              
+4      restaurant_5         Standard Grill & Bar                    
+5      restaurant_4         The Green Leaf Bistro                   
+6      restaurant_13        Green Garden Bistro                     
+7      restaurant_14        Family Feast Pizzeria                   
+8      restaurant_20        The Steakhouse Prime                    
+9      restaurant_15        The Sushi Master                        
+10     restaurant_12        The Night Owl Diner                     
+11     restaurant_1         24hr Vegan Diner                        
+12     restaurant_9         The Cozy Study Cafe                     
+13     restaurant_17        The Gluten-Free Haven                   
+14     restaurant_3         Purely Vegan Hub                        
+15     restaurant_2         Vegan Kitchen                           
+16     restaurant_10        Sunday Brunch House                     
+17     restaurant_19        Bubble Tea Paradise                     
+18     restaurant_7         The Kosher Deli                         
+19     restaurant_6         Sultan’s Halal Kitchen                  
+20     restaurant_16        Street Tacos Express                    
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'restaurant with live music venue'
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_18] Score: 4.6657
+[restaurant_11] Score: 5.4049
+[restaurant_8] Score: -3.3699
+[restaurant_5] Score: -10.5490
+[restaurant_4] Score: -8.7729
+[restaurant_13] Score: -9.1366
+[restaurant_14] Score: -9.8487
+[restaurant_20] Score: -9.7347
+[restaurant_15] Score: -9.0248
+[restaurant_12] Score: -9.4605
+[restaurant_1] Score: -10.7637
+[restaurant_9] Score: -9.9483
+[restaurant_17] Score: -10.5960
+[restaurant_3] Score: -10.0138
+[restaurant_2] Score: -9.8725
+[restaurant_10] Score: -10.8824
+[restaurant_19] Score: -11.1431
+[restaurant_7] Score: -10.3458
+[restaurant_6] Score: -11.1004
+[restaurant_16] Score: -10.2547
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_11        Spice & Rhythm Indian Kitchen            5.4049          0.00           
+2      restaurant_18        The Jazz Corner Bar & Grill              4.6657          0.00           
+3      restaurant_8         Sky & Stars Rooftop Lounge               -3.3699         0.00           
+4      restaurant_4         The Green Leaf Bistro                    -8.7729         0.00           
+5      restaurant_15        The Sushi Master                         -9.0248         0.00           
+6      restaurant_13        Green Garden Bistro                      -9.1366         0.00           
+7      restaurant_12        The Night Owl Diner                      -9.4605         0.00           
+8      restaurant_20        The Steakhouse Prime                     -9.7347         0.00           
+9      restaurant_14        Family Feast Pizzeria                    -9.8487         0.00           
+10     restaurant_2         Vegan Kitchen                            -9.8725         0.00           
+11     restaurant_9         The Cozy Study Cafe                      -9.9483         0.00           
+12     restaurant_3         Purely Vegan Hub                         -10.0138        0.00           
+13     restaurant_16        Street Tacos Express                     -10.2547        0.00           
+14     restaurant_7         The Kosher Deli                          -10.3458        0.00           
+15     restaurant_5         Standard Grill & Bar                     -10.5490        0.00           
+16     restaurant_17        The Gluten-Free Haven                    -10.5960        0.00           
+17     restaurant_1         24hr Vegan Diner                         -10.7637        0.00           
+18     restaurant_10        Sunday Brunch House                      -10.8824        0.00           
+19     restaurant_6         Sultan’s Halal Kitchen                   -11.1004        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -11.1431        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1456.88ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['The Jazz Corner Bar & Grill', 'Spice & Rhythm Indian Kitchen', 'Sky & Stars Rooftop Lounge']
+Actual Top 3 IDs: ['Spice & Rhythm Indian Kitchen', 'The Jazz Corner Bar & Grill', 'Sky & Stars Rooftop Lounge']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 1.00
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case10] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 12591.55it/s]
+
+======================================================================
+📊 TC5.1: Budget Quick Lunch
+Query: 'budget friendly quick lunch under 15 dollars'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'budget friendly quick lunch under 15 dollars'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_16        Street Tacos Express                    
+2      restaurant_4         The Green Leaf Bistro                   
+3      restaurant_3         Purely Vegan Hub                        
+4      restaurant_2         Vegan Kitchen                           
+5      restaurant_10        Sunday Brunch House                     
+6      restaurant_1         24hr Vegan Diner                        
+7      restaurant_6         Sultan’s Halal Kitchen                  
+8      restaurant_12        The Night Owl Diner                     
+9      restaurant_13        Green Garden Bistro                     
+10     restaurant_14        Family Feast Pizzeria                   
+11     restaurant_5         Standard Grill & Bar                    
+12     restaurant_19        Bubble Tea Paradise                     
+13     restaurant_21        Tropical Smoothie Bowl Café             
+14     restaurant_7         The Kosher Deli                         
+15     restaurant_9         The Cozy Study Cafe                     
+16     restaurant_17        The Gluten-Free Haven                   
+17     restaurant_8         Sky & Stars Rooftop Lounge              
+18     restaurant_15        The Sushi Master                        
+19     restaurant_18        The Jazz Corner Bar & Grill             
+20     restaurant_20        The Steakhouse Prime                    
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'budget friendly quick lunch under 15 dollars'
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_16] Score: -10.3058
+[restaurant_4] Score: -11.2379
+[restaurant_3] Score: -10.9240
+[restaurant_2] Score: -11.0416
+[restaurant_10] Score: -10.8974
+[restaurant_1] Score: -11.2866
+[restaurant_6] Score: -11.2524
+[restaurant_12] Score: -11.2448
+[restaurant_13] Score: -11.1826
+[restaurant_14] Score: -11.2840
+[restaurant_5] Score: -11.2994
+[restaurant_19] Score: -11.2697
+[restaurant_21] Score: -11.2048
+[restaurant_7] Score: -11.2432
+[restaurant_9] Score: -11.1848
+[restaurant_17] Score: -11.1724
+[restaurant_8] Score: -11.2743
+[restaurant_15] Score: -11.2741
+[restaurant_18] Score: -11.2547
+[restaurant_20] Score: -11.2675
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_16        Street Tacos Express                     -10.3058        0.00           
+2      restaurant_10        Sunday Brunch House                      -10.8974        0.00           
+3      restaurant_3         Purely Vegan Hub                         -10.9240        0.00           
+4      restaurant_2         Vegan Kitchen                            -11.0416        0.00           
+5      restaurant_17        The Gluten-Free Haven                    -11.1724        0.00           
+6      restaurant_13        Green Garden Bistro                      -11.1826        0.00           
+7      restaurant_9         The Cozy Study Cafe                      -11.1848        0.00           
+8      restaurant_21        Tropical Smoothie Bowl Café              -11.2048        0.00           
+9      restaurant_4         The Green Leaf Bistro                    -11.2379        0.00           
+10     restaurant_7         The Kosher Deli                          -11.2432        0.00           
+11     restaurant_12        The Night Owl Diner                      -11.2448        0.00           
+12     restaurant_6         Sultan’s Halal Kitchen                   -11.2524        0.00           
+13     restaurant_18        The Jazz Corner Bar & Grill              -11.2547        0.00           
+14     restaurant_20        The Steakhouse Prime                     -11.2675        0.00           
+15     restaurant_19        Bubble Tea Paradise                      -11.2697        0.00           
+16     restaurant_15        The Sushi Master                         -11.2741        0.00           
+17     restaurant_8         Sky & Stars Rooftop Lounge               -11.2743        0.00           
+18     restaurant_14        Family Feast Pizzeria                    -11.2840        0.00           
+19     restaurant_1         24hr Vegan Diner                         -11.2866        0.00           
+20     restaurant_5         Standard Grill & Bar                     -11.2994        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1525.68ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Street Tacos Express', 'Bubble Tea Paradise']
+Actual Top 3 IDs: ['Street Tacos Express', 'Sunday Brunch House', 'Purely Vegan Hub']
+
+Metrics:
+  Precision@1: 1.00 (min: 0.66)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    0.50
+  NDCG@5:      0.61
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case11] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8814.56it/s]
+
+======================================================================
+📊 TC5.2: Fine Dining Premium
+Query: 'fine dining premium experience special occasion'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'fine dining premium experience special occasion'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_20        The Steakhouse Prime                    
+2      restaurant_15        The Sushi Master                        
+3      restaurant_8         Sky & Stars Rooftop Lounge              
+4      restaurant_5         Standard Grill & Bar                    
+5      restaurant_14        Family Feast Pizzeria                   
+6      restaurant_18        The Jazz Corner Bar & Grill             
+7      restaurant_6         Sultan’s Halal Kitchen                  
+8      restaurant_13        Green Garden Bistro                     
+9      restaurant_17        The Gluten-Free Haven                   
+10     restaurant_10        Sunday Brunch House                     
+11     restaurant_7         The Kosher Deli                         
+12     restaurant_11        Spice & Rhythm Indian Kitchen           
+13     restaurant_19        Bubble Tea Paradise                     
+14     restaurant_4         The Green Leaf Bistro                   
+15     restaurant_16        Street Tacos Express                    
+16     restaurant_12        The Night Owl Diner                     
+17     restaurant_1         24hr Vegan Diner                        
+18     restaurant_3         Purely Vegan Hub                        
+19     restaurant_21        Tropical Smoothie Bowl Café             
+20     restaurant_2         Vegan Kitchen                           
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'fine dining premium experience special occasion'
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_20] Score: -0.7965
+[restaurant_15] Score: -8.4184
+[restaurant_8] Score: -4.3468
+[restaurant_5] Score: -10.7659
+[restaurant_14] Score: -11.0975
+[restaurant_18] Score: -6.4495
+[restaurant_6] Score: -9.6445
+[restaurant_13] Score: -11.0347
+[restaurant_17] Score: -11.2252
+[restaurant_10] Score: -11.0379
+[restaurant_7] Score: -11.2542
+[restaurant_11] Score: -10.5433
+[restaurant_19] Score: -11.3203
+[restaurant_4] Score: -11.0699
+[restaurant_16] Score: -10.9866
+[restaurant_12] Score: -10.5707
+[restaurant_1] Score: -11.2309
+[restaurant_3] Score: -10.6832
+[restaurant_21] Score: -11.2332
+[restaurant_2] Score: -10.7375
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_20        The Steakhouse Prime                     -0.7965         0.00           
+2      restaurant_8         Sky & Stars Rooftop Lounge               -4.3468         0.00           
+3      restaurant_18        The Jazz Corner Bar & Grill              -6.4495         0.00           
+4      restaurant_15        The Sushi Master                         -8.4184         0.00           
+5      restaurant_6         Sultan’s Halal Kitchen                   -9.6445         0.00           
+6      restaurant_11        Spice & Rhythm Indian Kitchen            -10.5433        0.00           
+7      restaurant_12        The Night Owl Diner                      -10.5707        0.00           
+8      restaurant_3         Purely Vegan Hub                         -10.6832        0.00           
+9      restaurant_2         Vegan Kitchen                            -10.7375        0.00           
+10     restaurant_5         Standard Grill & Bar                     -10.7659        0.00           
+11     restaurant_16        Street Tacos Express                     -10.9866        0.00           
+12     restaurant_13        Green Garden Bistro                      -11.0347        0.00           
+13     restaurant_10        Sunday Brunch House                      -11.0379        0.00           
+14     restaurant_4         The Green Leaf Bistro                    -11.0699        0.00           
+15     restaurant_14        Family Feast Pizzeria                    -11.0975        0.00           
+16     restaurant_17        The Gluten-Free Haven                    -11.2252        0.00           
+17     restaurant_1         24hr Vegan Diner                         -11.2309        0.00           
+18     restaurant_21        Tropical Smoothie Bowl Café              -11.2332        0.00           
+19     restaurant_7         The Kosher Deli                          -11.2542        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -11.3203        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1502.54ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['The Steakhouse Prime', 'The Sushi Master']
+Actual Top 3 IDs: ['The Steakhouse Prime', 'Sky & Stars Rooftop Lounge', 'The Jazz Corner Bar & Grill']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 0.50)
+  Recall@5:    1.00
+  NDCG@5:      0.88
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case12] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 10714.33it/s]
+
+======================================================================
+📊 TC6.1: Italian Pizza Family
+Query: 'Italian pizza family friendly'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'Italian pizza family friendly'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_14        Family Feast Pizzeria                   
+2      restaurant_4         The Green Leaf Bistro                   
+3      restaurant_5         Standard Grill & Bar                    
+4      restaurant_10        Sunday Brunch House                     
+5      restaurant_6         Sultan’s Halal Kitchen                  
+6      restaurant_17        The Gluten-Free Haven                   
+7      restaurant_12        The Night Owl Diner                     
+8      restaurant_3         Purely Vegan Hub                        
+9      restaurant_2         Vegan Kitchen                           
+10     restaurant_13        Green Garden Bistro                     
+11     restaurant_11        Spice & Rhythm Indian Kitchen           
+12     restaurant_16        Street Tacos Express                    
+13     restaurant_7         The Kosher Deli                         
+14     restaurant_18        The Jazz Corner Bar & Grill             
+15     restaurant_8         Sky & Stars Rooftop Lounge              
+16     restaurant_1         24hr Vegan Diner                        
+17     restaurant_15        The Sushi Master                        
+18     restaurant_20        The Steakhouse Prime                    
+19     restaurant_19        Bubble Tea Paradise                     
+20     restaurant_9         The Cozy Study Cafe                     
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'Italian pizza family friendly'
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_14] Score: 5.0466
+[restaurant_4] Score: -9.0876
+[restaurant_5] Score: -11.1379
+[restaurant_10] Score: -9.3865
+[restaurant_6] Score: -11.2215
+[restaurant_17] Score: -11.2468
+[restaurant_12] Score: -11.2338
+[restaurant_3] Score: -11.2255
+[restaurant_2] Score: -11.1880
+[restaurant_13] Score: -11.1575
+[restaurant_11] Score: -11.2285
+[restaurant_16] Score: -11.0258
+[restaurant_7] Score: -11.1702
+[restaurant_18] Score: -11.1988
+[restaurant_8] Score: -11.2217
+[restaurant_1] Score: -11.2372
+[restaurant_15] Score: -11.2043
+[restaurant_20] Score: -11.2073
+[restaurant_19] Score: -11.2942
+[restaurant_9] Score: -11.2211
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_14        Family Feast Pizzeria                    5.0466          0.00           
+2      restaurant_4         The Green Leaf Bistro                    -9.0876         0.00           
+3      restaurant_10        Sunday Brunch House                      -9.3865         0.00           
+4      restaurant_16        Street Tacos Express                     -11.0258        0.00           
+5      restaurant_5         Standard Grill & Bar                     -11.1379        0.00           
+6      restaurant_13        Green Garden Bistro                      -11.1575        0.00           
+7      restaurant_7         The Kosher Deli                          -11.1702        0.00           
+8      restaurant_2         Vegan Kitchen                            -11.1880        0.00           
+9      restaurant_18        The Jazz Corner Bar & Grill              -11.1988        0.00           
+10     restaurant_15        The Sushi Master                         -11.2043        0.00           
+11     restaurant_20        The Steakhouse Prime                     -11.2073        0.00           
+12     restaurant_9         The Cozy Study Cafe                      -11.2211        0.00           
+13     restaurant_6         Sultan’s Halal Kitchen                   -11.2215        0.00           
+14     restaurant_8         Sky & Stars Rooftop Lounge               -11.2217        0.00           
+15     restaurant_3         Purely Vegan Hub                         -11.2255        0.00           
+16     restaurant_11        Spice & Rhythm Indian Kitchen            -11.2285        0.00           
+17     restaurant_12        The Night Owl Diner                      -11.2338        0.00           
+18     restaurant_1         24hr Vegan Diner                         -11.2372        0.00           
+19     restaurant_17        The Gluten-Free Haven                    -11.2468        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -11.2942        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1560.00ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Family Feast Pizzeria']
+Actual Top 3 IDs: ['Family Feast Pizzeria', 'The Green Leaf Bistro', 'Sunday Brunch House']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case13] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8681.98it/s]
+
+======================================================================
+📊 TC6.2: Mexican Street Food
+Query: 'Mexican street food casual'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'Mexican street food casual'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_16        Street Tacos Express                    
+2      restaurant_3         Purely Vegan Hub                        
+3      restaurant_2         Vegan Kitchen                           
+4      restaurant_5         Standard Grill & Bar                    
+5      restaurant_14        Family Feast Pizzeria                   
+6      restaurant_7         The Kosher Deli                         
+7      restaurant_12        The Night Owl Diner                     
+8      restaurant_11        Spice & Rhythm Indian Kitchen           
+9      restaurant_21        Tropical Smoothie Bowl Café             
+10     restaurant_1         24hr Vegan Diner                        
+11     restaurant_15        The Sushi Master                        
+12     restaurant_18        The Jazz Corner Bar & Grill             
+13     restaurant_4         The Green Leaf Bistro                   
+14     restaurant_6         Sultan’s Halal Kitchen                  
+15     restaurant_8         Sky & Stars Rooftop Lounge              
+16     restaurant_19        Bubble Tea Paradise                     
+17     restaurant_10        Sunday Brunch House                     
+18     restaurant_9         The Cozy Study Cafe                     
+19     restaurant_13        Green Garden Bistro                     
+20     restaurant_17        The Gluten-Free Haven                   
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'Mexican street food casual'
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_16] Score: 4.5740
+[restaurant_3] Score: 0.1263
+[restaurant_2] Score: 0.4881
+[restaurant_5] Score: -10.5394
+[restaurant_14] Score: -11.1065
+[restaurant_7] Score: -10.8678
+[restaurant_12] Score: -10.5132
+[restaurant_11] Score: -11.0364
+[restaurant_21] Score: -10.9680
+[restaurant_1] Score: -11.2437
+[restaurant_15] Score: -11.1687
+[restaurant_18] Score: -10.3453
+[restaurant_4] Score: -10.6807
+[restaurant_6] Score: -11.1737
+[restaurant_8] Score: -10.3111
+[restaurant_19] Score: -11.2445
+[restaurant_10] Score: -11.0996
+[restaurant_9] Score: -10.9039
+[restaurant_13] Score: -11.0605
+[restaurant_17] Score: -11.0860
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_16        Street Tacos Express                     4.5740          0.00           
+2      restaurant_2         Vegan Kitchen                            0.4881          0.00           
+3      restaurant_3         Purely Vegan Hub                         0.1263          0.00           
+4      restaurant_8         Sky & Stars Rooftop Lounge               -10.3111        0.00           
+5      restaurant_18        The Jazz Corner Bar & Grill              -10.3453        0.00           
+6      restaurant_12        The Night Owl Diner                      -10.5132        0.00           
+7      restaurant_5         Standard Grill & Bar                     -10.5394        0.00           
+8      restaurant_4         The Green Leaf Bistro                    -10.6807        0.00           
+9      restaurant_7         The Kosher Deli                          -10.8678        0.00           
+10     restaurant_9         The Cozy Study Cafe                      -10.9039        0.00           
+11     restaurant_21        Tropical Smoothie Bowl Café              -10.9680        0.00           
+12     restaurant_11        Spice & Rhythm Indian Kitchen            -11.0364        0.00           
+13     restaurant_13        Green Garden Bistro                      -11.0605        0.00           
+14     restaurant_17        The Gluten-Free Haven                    -11.0860        0.00           
+15     restaurant_10        Sunday Brunch House                      -11.0996        0.00           
+16     restaurant_14        Family Feast Pizzeria                    -11.1065        0.00           
+17     restaurant_15        The Sushi Master                         -11.1687        0.00           
+18     restaurant_6         Sultan’s Halal Kitchen                   -11.1737        0.00           
+19     restaurant_1         24hr Vegan Diner                         -11.2437        0.00           
+20     restaurant_19        Bubble Tea Paradise                      -11.2445        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1578.87ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Street Tacos Express']
+Actual Top 3 IDs: ['Street Tacos Express', 'Vegan Kitchen', 'Purely Vegan Hub']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case14] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 9940.68it/s]
+
+======================================================================
+📊 TC7.1: Healthy Plant-Based
+Query: 'healthy plant based vegan organic'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'healthy plant based vegan organic'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_13        Green Garden Bistro                     
+2      restaurant_4         The Green Leaf Bistro                   
+3      restaurant_21        Tropical Smoothie Bowl Café             
+4      restaurant_1         24hr Vegan Diner                        
+5      restaurant_3         Purely Vegan Hub                        
+6      restaurant_2         Vegan Kitchen                           
+7      restaurant_17        The Gluten-Free Haven                   
+8      restaurant_19        Bubble Tea Paradise                     
+9      restaurant_10        Sunday Brunch House                     
+10     restaurant_6         Sultan’s Halal Kitchen                  
+11     restaurant_9         The Cozy Study Cafe                     
+12     restaurant_7         The Kosher Deli                         
+13     restaurant_11        Spice & Rhythm Indian Kitchen           
+14     restaurant_16        Street Tacos Express                    
+15     restaurant_8         Sky & Stars Rooftop Lounge              
+16     restaurant_5         Standard Grill & Bar                    
+17     restaurant_14        Family Feast Pizzeria                   
+18     restaurant_20        The Steakhouse Prime                    
+19     restaurant_12        The Night Owl Diner                     
+20     restaurant_18        The Jazz Corner Bar & Grill             
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'healthy plant based vegan organic'
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_9]
+Text: The Cozy Study Cafe Quiet, wifi-enabled cafe with comfortable seating, ideal for working, studying, or catching up with friends over specialty coffee. cafe light fare vegan vegetarian regular breakfast brunch lunch
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_13] Score: 3.5855
+[restaurant_4] Score: -2.5101
+[restaurant_21] Score: -9.0411
+[restaurant_1] Score: -10.9158
+[restaurant_3] Score: -10.0378
+[restaurant_2] Score: -10.0391
+[restaurant_17] Score: -11.2671
+[restaurant_19] Score: -10.7110
+[restaurant_10] Score: -11.2046
+[restaurant_6] Score: -11.2829
+[restaurant_9] Score: -10.8884
+[restaurant_7] Score: -11.2597
+[restaurant_11] Score: -10.8946
+[restaurant_16] Score: -11.1905
+[restaurant_8] Score: -11.2089
+[restaurant_5] Score: -11.2371
+[restaurant_14] Score: -11.2265
+[restaurant_20] Score: -11.2607
+[restaurant_12] Score: -11.2341
+[restaurant_18] Score: -11.1975
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_13        Green Garden Bistro                      3.5855          0.00           
+2      restaurant_4         The Green Leaf Bistro                    -2.5101         0.00           
+3      restaurant_21        Tropical Smoothie Bowl Café              -9.0411         0.00           
+4      restaurant_3         Purely Vegan Hub                         -10.0378        0.00           
+5      restaurant_2         Vegan Kitchen                            -10.0391        0.00           
+6      restaurant_19        Bubble Tea Paradise                      -10.7110        0.00           
+7      restaurant_9         The Cozy Study Cafe                      -10.8884        0.00           
+8      restaurant_11        Spice & Rhythm Indian Kitchen            -10.8946        0.00           
+9      restaurant_1         24hr Vegan Diner                         -10.9158        0.00           
+10     restaurant_16        Street Tacos Express                     -11.1905        0.00           
+11     restaurant_18        The Jazz Corner Bar & Grill              -11.1975        0.00           
+12     restaurant_10        Sunday Brunch House                      -11.2046        0.00           
+13     restaurant_8         Sky & Stars Rooftop Lounge               -11.2089        0.00           
+14     restaurant_14        Family Feast Pizzeria                    -11.2265        0.00           
+15     restaurant_12        The Night Owl Diner                      -11.2341        0.00           
+16     restaurant_5         Standard Grill & Bar                     -11.2371        0.00           
+17     restaurant_7         The Kosher Deli                          -11.2597        0.00           
+18     restaurant_20        The Steakhouse Prime                     -11.2607        0.00           
+19     restaurant_17        The Gluten-Free Haven                    -11.2671        0.00           
+20     restaurant_6         Sultan’s Halal Kitchen                   -11.2829        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1524.28ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['Green Garden Bistro', 'Tropical Smoothie Bowl Café']
+Actual Top 3 IDs: ['Green Garden Bistro', 'The Green Leaf Bistro', 'Tropical Smoothie Bowl Café']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.67
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      0.92
+✅ PASSED
+
+PASSED
+test/test_restaurant_eval.py::test_search_quality_evals[case15] Loading weights:   0%|          | 0/105 [00:00<?, ?it/s]Loading weights: 100%|██████████| 105/105 [00:00<00:00, 8722.56it/s]
+
+======================================================================
+📊 TC7.2: Gluten-Free Safe
+Query: 'gluten free safe dining certified'
+======================================================================
+
+================================================================================
+  HYBRID SEARCH PIPELINE START
+================================================================================
+
+Query: 'gluten free safe dining certified'
+Embedding Model: text-embedding-3-small
+Re-ranker Model: ms-marco-MiniLM-L-6-v2
+Entity IDs Allowed: 21 restaurants
+Parameters: limit=5, num_candidates=20
+
+
+--------------------------------------------------------------------------------
+  PHASE 1: Query Embedding
+--------------------------------------------------------------------------------
+✓ Query embedded to 1536 dimensions
+
+
+--------------------------------------------------------------------------------
+  PHASE 2: MongoDB Vector Search
+--------------------------------------------------------------------------------
+✓ Retrieved 20 candidates from vector search
+
+
+--------------------------------------------------------------------------------
+  PRE-RERANK CANDIDATES
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                    
+------------------------------------------------------------------
+1      restaurant_17        The Gluten-Free Haven                   
+2      restaurant_13        Green Garden Bistro                     
+3      restaurant_4         The Green Leaf Bistro                   
+4      restaurant_21        Tropical Smoothie Bowl Café             
+5      restaurant_6         Sultan’s Halal Kitchen                  
+6      restaurant_7         The Kosher Deli                         
+7      restaurant_14        Family Feast Pizzeria                   
+8      restaurant_5         Standard Grill & Bar                    
+9      restaurant_3         Purely Vegan Hub                        
+10     restaurant_2         Vegan Kitchen                           
+11     restaurant_1         24hr Vegan Diner                        
+12     restaurant_15        The Sushi Master                        
+13     restaurant_20        The Steakhouse Prime                    
+14     restaurant_8         Sky & Stars Rooftop Lounge              
+15     restaurant_10        Sunday Brunch House                     
+16     restaurant_19        Bubble Tea Paradise                     
+17     restaurant_16        Street Tacos Express                    
+18     restaurant_18        The Jazz Corner Bar & Grill             
+19     restaurant_12        The Night Owl Diner                     
+20     restaurant_11        Spice & Rhythm Indian Kitchen           
+
+
+--------------------------------------------------------------------------------
+  PHASE 3: Cross-Encoder Re-ranking
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  RE-RANKER: COMPOSED RESTAURANT TEXTS
+--------------------------------------------------------------------------------
+Query: 'gluten free safe dining certified'
+
+[restaurant_17]
+Text: The Gluten-Free Haven Dedicated gluten-free bakery and restaurant with certified preparation areas. All items are gluten-free or clearly separated. gluten free bakery cafe gluten free vegetarian breakfast brunch lunch
+
+[restaurant_13]
+Text: Green Garden Bistro 100% plant-based restaurant with innovative vegan cuisine, organic wine selection, and sustainable practices throughout. vegan contemporary vegan lunch dinner
+
+[restaurant_4]
+Text: The Green Leaf Bistro A dedicated vegetarian garden cafe focusing on fresh salads, plant-based pastas, and artisanal cheeses. No meat products are permitted on-site. italian vegetarian Lunch Dinner
+
+[restaurant_21]
+Text: Tropical Smoothie Bowl Café Health-conscious smoothie bar with açaí bowls, protein smoothies, and cold-pressed juices. Fitness-friendly menu. healthy smoothies bowls vegan vegetarian gluten free breakfast brunch
+
+[restaurant_6]
+Text: Sultan’s Halal Kitchen Premium certified Halal hand-slaughtered meats prepared in a traditional Middle Eastern style. Known for chicken shawarma and lamb mandy. middle eastern halal lunch dinner
+
+[restaurant_7]
+Text: The Kosher Deli Strictly Glatt Kosher delicatessen serving house-cured pastrami, matzah ball soup, and traditional Jewish comfort food. jewish deli kosher brunch lunch
+
+[restaurant_14]
+Text: Family Feast Pizzeria Family-run Italian pizzeria with wood-fired ovens, large tables, and a kids menu. Great for parties and family celebrations. italian pizza vegetarian regular lunch dinner
+
+[restaurant_5]
+Text: Standard Grill & Bar A classic American grill serving high-quality steaks, burgers, and wings. A regular local favorite with no specific dietary restrictions. american regular Dinner Late Night
+
+[restaurant_3]
+Text: Purely Vegan Hub A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. american vegan Brunch Lunch Dinner Late Night
+
+[restaurant_2]
+Text: Vegan Kitchen A casual takeout and dine-in spot specializing in Korean-inspired street food like fried chicken, corn dogs, and kimchi fries. Popular for relaxed hangouts and quick bites in Kensington Market. Korean Fusion Street Food vegetarian vegan regular brunch lunch dinner late night
+
+[restaurant_1]
+Text: 24hr Vegan Diner 24-hour vegan restaurant for late-night cravings nepali vegan breakfast lunch dinner late night
+
+[restaurant_15]
+Text: The Sushi Master High-end omakase sushi bar with chef's tasting menu, Japanese premium sake selection, and intimate sushi counter seating. japanese sushi regular dinner late night
+
+[restaurant_20]
+Text: The Steakhouse Prime Fine dining steakhouse featuring premium USDA Prime beef, caviar appetizers, and an award-winning wine cellar. steakhouse fine dining regular dinner
+
+[restaurant_8]
+Text: Sky & Stars Rooftop Lounge Upscale rooftop venue with panoramic city views, perfect for romantic evenings and special occasions. Craft cocktails and elevated cuisine. contemporary regular vegetarian gluten free dinner late night
+
+[restaurant_10]
+Text: Sunday Brunch House Weekend brunch specialist with a 2-hour brunch menu featuring eggs benedict, pancakes, and fresh juices. Family-friendly atmosphere. brunch american vegetarian regular brunch lunch
+
+[restaurant_19]
+Text: Bubble Tea Paradise Trendy bubble tea shop with over 50 flavors, customizable toppings, and Instagram-worthy presentations. Student hangout spot. beverages dessert vegan vegetarian regular breakfast lunch afternoon snack
+
+[restaurant_16]
+Text: Street Tacos Express Quick-service taqueria with authentic Mexican street tacos, fresh lime, cilantro, and house-made salsas. Perfect for lunch break. mexican street food vegetarian regular lunch dinner
+
+[restaurant_18]
+Text: The Jazz Corner Bar & Grill Dimly-lit jazz club with live music nightly, craft cocktails, and upscale bar bites. Premium atmosphere for music lovers. contemporary bar food regular vegetarian dinner late night
+
+[restaurant_12]
+Text: The Night Owl Diner Classic 24-hour diner with comfort food, milkshakes, and pies. Popular with night shift workers and late-night adventurers. american comfort food regular vegetarian breakfast lunch dinner late night
+
+[restaurant_11]
+Text: Spice & Rhythm Indian Kitchen Vibrant Indian restaurant with live sitar music performances on weekends. Authentic North Indian curries and tandoor specialties. indian vegetarian vegan regular lunch dinner late night
+
+--------------------------------------------------------------------------------
+Running cross-encoder prediction on 20 candidate pairs...
+
+
+--------------------------------------------------------------------------------
+  RE-RANKER: SCORES ASSIGNED
+--------------------------------------------------------------------------------
+[restaurant_17] Score: 5.3575
+[restaurant_13] Score: -10.8642
+[restaurant_4] Score: -11.0764
+[restaurant_21] Score: -3.9554
+[restaurant_6] Score: -10.7774
+[restaurant_7] Score: -11.0978
+[restaurant_14] Score: -11.3620
+[restaurant_5] Score: -11.2789
+[restaurant_3] Score: -10.9658
+[restaurant_2] Score: -11.0990
+[restaurant_1] Score: -11.1266
+[restaurant_15] Score: -11.3449
+[restaurant_20] Score: -11.2538
+[restaurant_8] Score: -2.6359
+[restaurant_10] Score: -11.3006
+[restaurant_19] Score: -11.3560
+[restaurant_16] Score: -11.3148
+[restaurant_18] Score: -11.2855
+[restaurant_12] Score: -11.0969
+[restaurant_11] Score: -11.2765
+
+✓ Re-ranking complete
+
+
+--------------------------------------------------------------------------------
+  POST-RERANK RESULTS
+--------------------------------------------------------------------------------
+Rank   Restaurant ID        Name                                     Rerank Score    Distance (km)  
+------------------------------------------------------------------------------------------------
+1      restaurant_17        The Gluten-Free Haven                    5.3575          0.00           
+2      restaurant_8         Sky & Stars Rooftop Lounge               -2.6359         0.00           
+3      restaurant_21        Tropical Smoothie Bowl Café              -3.9554         0.00           
+4      restaurant_6         Sultan’s Halal Kitchen                   -10.7774        0.00           
+5      restaurant_13        Green Garden Bistro                      -10.8642        0.00           
+6      restaurant_3         Purely Vegan Hub                         -10.9658        0.00           
+7      restaurant_4         The Green Leaf Bistro                    -11.0764        0.00           
+8      restaurant_12        The Night Owl Diner                      -11.0969        0.00           
+9      restaurant_7         The Kosher Deli                          -11.0978        0.00           
+10     restaurant_2         Vegan Kitchen                            -11.0990        0.00           
+11     restaurant_1         24hr Vegan Diner                         -11.1266        0.00           
+12     restaurant_20        The Steakhouse Prime                     -11.2538        0.00           
+13     restaurant_11        Spice & Rhythm Indian Kitchen            -11.2765        0.00           
+14     restaurant_5         Standard Grill & Bar                     -11.2789        0.00           
+15     restaurant_18        The Jazz Corner Bar & Grill              -11.2855        0.00           
+16     restaurant_10        Sunday Brunch House                      -11.3006        0.00           
+17     restaurant_16        Street Tacos Express                     -11.3148        0.00           
+18     restaurant_15        The Sushi Master                         -11.3449        0.00           
+19     restaurant_19        Bubble Tea Paradise                      -11.3560        0.00           
+20     restaurant_14        Family Feast Pizzeria                    -11.3620        0.00           
+
+
+--------------------------------------------------------------------------------
+  PIPELINE SUMMARY
+--------------------------------------------------------------------------------
+Total Results: 20
+Execution Time: 1762.75ms
+
+================================================================================
+  HYBRID SEARCH PIPELINE END
+================================================================================
+
+Expected Top IDs: ['The Gluten-Free Haven']
+Actual Top 3 IDs: ['The Gluten-Free Haven', 'Sky & Stars Rooftop Lounge', 'Tropical Smoothie Bowl Café']
+
+Metrics:
+  Precision@1: 1.00 (min: 1.00)
+  Precision@3: 0.33
+  MRR:         1.00 (min: 1.00)
+  Recall@5:    1.00
+  NDCG@5:      1.00
+✅ PASSED
+
+PASSED
+
+======================== 16 passed in 71.07s (0:01:11) =========================
