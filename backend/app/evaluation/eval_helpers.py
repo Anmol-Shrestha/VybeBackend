@@ -1,103 +1,98 @@
-"""Evaluation metrics for restaurant search quality."""
+"""Shared evaluation metrics for search quality assessment."""
 
 
-def calculate_precision_at_k(actual_ids: list[str], expected_ids: list[str], k: int = 1) -> float:
-    """
-    Calculate Precision@K: What fraction of top-K results are relevant?
+def calculate_precision_at_k(actual_ids, expected_ids, k=5):
+    """Calculate Precision@K: fraction of top-k results that are relevant.
 
     Args:
-        actual_ids: IDs returned by search engine (ordered by rank)
-        expected_ids: Ground truth relevant IDs
-        k: Evaluate only top-K results
+        actual_ids: List of returned result IDs
+        expected_ids: List of relevant/expected IDs
+        k: Cutoff position
 
     Returns:
-        Float between 0 and 1
-        - 1.0: All top-K are relevant
-        - 0.5: Half of top-K are relevant
-        - 0.0: None of top-K are relevant
+        Precision@K (0.0 to 1.0)
     """
     if not actual_ids or not expected_ids:
         return 0.0
 
     top_k = actual_ids[:k]
     relevant_count = sum(1 for id in top_k if id in expected_ids)
-    return relevant_count / k
+    return relevant_count / min(k, len(top_k))
 
 
-def calculate_mrr(actual_ids: list[str], expected_ids: list[str]) -> float:
-    """
-    Calculate Mean Reciprocal Rank: Position of first relevant result.
-
-    Args:
-        actual_ids: IDs returned by search engine (ordered by rank)
-        expected_ids: Ground truth relevant IDs
-
-    Returns:
-        Float between 0 and 1
-        - 1.0: First result is relevant (rank 1)
-        - 0.5: Second result is relevant (rank 2)
-        - 0.33: Third result is relevant (rank 3)
-        - 0.0: No relevant result found
-    """
-    for rank, id in enumerate(actual_ids, 1):
-        if id in expected_ids:
-            return 1.0 / rank
-    return 0.0
-
-
-def calculate_recall_at_k(actual_ids: list[str], expected_ids: list[str], k: int = 10) -> float:
-    """
-    Calculate Recall@K: What fraction of relevant items are in top-K?
+def calculate_recall_at_k(actual_ids, expected_ids, k=5):
+    """Calculate Recall@K: fraction of expected IDs found in top-k.
 
     Args:
-        actual_ids: IDs returned by search engine (ordered by rank)
-        expected_ids: Ground truth relevant IDs
-        k: Evaluate only top-K results
+        actual_ids: List of returned result IDs
+        expected_ids: List of relevant/expected IDs
+        k: Cutoff position
 
     Returns:
-        Float between 0 and 1
+        Recall@K (0.0 to 1.0)
     """
     if not expected_ids:
         return 0.0
 
     top_k = actual_ids[:k]
-    relevant_found = sum(1 for id in top_k if id in expected_ids)
-    return relevant_found / len(expected_ids)
+    relevant_count = sum(1 for id in expected_ids if id in top_k)
+    return relevant_count / len(expected_ids)
 
 
-def calculate_ndcg(actual_ids: list[str], expected_ids: list[str], k: int = 10) -> float:
-    """
-    Calculate Normalized Discounted Cumulative Gain: Quality of ranking.
-
-    Penalizes relevant items that appear later in the ranking.
-    - DCG rewards relevant items, discounts by position: sum(rel_i / log2(i+1))
-    - NDCG = DCG / IDCG (normalized by ideal ranking)
+def calculate_mrr(actual_ids, expected_ids):
+    """Calculate Mean Reciprocal Rank: rank of first relevant result.
 
     Args:
-        actual_ids: IDs returned by search engine (ordered by rank)
-        expected_ids: Ground truth relevant IDs
-        k: Evaluate only top-K results
+        actual_ids: List of returned result IDs
+        expected_ids: List of relevant/expected IDs
 
     Returns:
-        Float between 0 and 1 (1.0 = perfect ranking)
+        MRR (0.0 to 1.0). Higher is better.
+        1.0 = first result is relevant
+        0.5 = first relevant result at position 2
+        0.0 = no relevant results found
     """
-    import math
+    for i, id in enumerate(actual_ids):
+        if id in expected_ids:
+            return 1.0 / (i + 1)
+    return 0.0
 
-    if not expected_ids:
+
+def calculate_ndcg(actual_ids, expected_ids, k=5):
+    """Calculate Normalized Discounted Cumulative Gain.
+
+    NDCG measures ranking quality accounting for position decay.
+    Relevant results ranked earlier contribute more to the score.
+
+    Args:
+        actual_ids: List of returned result IDs
+        expected_ids: List of relevant/expected IDs
+        k: Cutoff position
+
+    Returns:
+        NDCG@K (0.0 to 1.0)
+    """
+    if not actual_ids or not expected_ids:
         return 0.0
 
-    # Calculate DCG
+    # Calculate DCG (Discounted Cumulative Gain)
     dcg = 0.0
-    for rank, id in enumerate(actual_ids[:k], 1):
+    for i, id in enumerate(actual_ids[:k]):
         relevance = 1.0 if id in expected_ids else 0.0
-        dcg += relevance / math.log2(rank + 1)
+        # Discount factor: 1 / log2(position + 1)
+        discount = 1.0 / (2 ** (i / 1.0))
+        dcg += relevance * discount
 
-    # Calculate IDCG (ideal: all relevant items at top)
+    # Calculate IDCG (Ideal DCG) - perfect ranking
     idcg = 0.0
-    for rank in range(1, min(len(expected_ids), k) + 1):
-        idcg += 1.0 / math.log2(rank + 1)
+    num_relevant = len(expected_ids)
+    for i in range(min(k, num_relevant)):
+        discount = 1.0 / (2 ** (i / 1.0))
+        idcg += discount
 
     if idcg == 0:
         return 0.0
 
     return dcg / idcg
+
+

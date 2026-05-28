@@ -1,0 +1,21 @@
+[project]
+name = "vybesix-mcp"
+version = "0.1.0"
+description = "MCP server for Vybesix Restaurant Discovery API"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=0.1.0",
+    "httpx>=0.24.0",
+    "pydantic>=2.0",
+    "python-dotenv",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21.0",
+]

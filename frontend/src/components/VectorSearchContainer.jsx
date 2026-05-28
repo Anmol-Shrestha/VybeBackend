@@ -54,9 +54,9 @@ export default function VectorSearchContainer({ restaurants, onResults }) {
     <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header */}
       <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white">🔍 Semantic Search</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white">🔍 Intent  Classifier</h2>
         <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-          Ask anything about the {restaurants.length} restaurants
+          I can help you find restaurants
         </p>
       </div>
 
@@ -66,7 +66,7 @@ export default function VectorSearchContainer({ restaurants, onResults }) {
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
               <div className="text-4xl mb-4">💬</div>
-              <p className="text-slate-600 dark:text-slate-400 font-medium">Ask me anything</p>
+              <p className="text-slate-600 dark:text-slate-400 font-medium">"Is there any vegan restaurants nearby?"</p>
               <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
                 Try: "vegan restaurants", "good for dates", "late night", "live music"
               </p>

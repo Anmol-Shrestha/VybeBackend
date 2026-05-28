@@ -2,6 +2,25 @@
 
 A full-stack restaurant search application with FastAPI backend and React frontend.
 
+## Architectural Pattern
+### Service Classes follows Composition Pattern
+Reason: 
+1. Composition pattern is good for Collaboration.
+A Restaurant Service has a Restaurant Repo
+A restaurant service has a Restaurant Search Service 
+
+### Repository Classes follows Inheritance Pattern
+
+Reason:
+
+2. Repository Classes follow Inheritance Pattern
+MongoDB Restaurant Repo is a Restaurant Repo
+PostGres Restaurant Repo is a Restaurant Repo
+Therefore it inherits
+
+
+
+
 ## Quick Start
 
 ### Prerequisites

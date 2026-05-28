@@ -28,6 +28,7 @@ class HybridSearchService:
         entity_ids: list[str],
         limit: int = 10,
         num_candidates: int = 100,
+        allergens_to_exclude: list[str] = None,
     ) -> list[dict]:
         """Search entities by semantic similarity and rerank results.
 
@@ -36,10 +37,13 @@ class HybridSearchService:
             entity_ids: Pre-filtered entity IDs to search within
             limit: Number of final results to return
             num_candidates: Number of candidates to rerank
+            allergens_to_exclude: Optional - hard filter to exclude items with these allergens
+                                 (food-specific, ignored by restaurant repositories)
 
         Returns:
             List of reranked entities
         """
+        allergens_to_exclude = allergens_to_exclude or []
         start_time = time.time()
 
         # ===== PIPELINE START =====
@@ -59,11 +63,19 @@ class HybridSearchService:
 
         # ===== VECTOR SEARCH PHASE =====
         log_subsection(self.logger, "PHASE 2: MongoDB Vector Search")
+
+        # Build search kwargs - allergens_to_exclude is optional (food-specific)
+        search_kwargs = {
+            "limit": num_candidates,
+            "num_candidates": num_candidates,
+        }
+        if allergens_to_exclude:
+            search_kwargs["allergens_to_exclude"] = allergens_to_exclude
+
         candidates = await self.vector_repository.vector_search_by_ids(
             entity_ids,
             query_embedding,
-            limit=num_candidates,
-            num_candidates=num_candidates,
+            **search_kwargs
         )
 
         self.logger.info(f"✓ Retrieved {len(candidates)} candidates from vector search\n")
@@ -83,14 +95,13 @@ class HybridSearchService:
         self.logger.info(f"✓ Re-ranking complete\n")
 
         log_subsection(self.logger, "POST-RERANK RESULTS")
-        self.logger.info(f"{'Rank':<6} {'Restaurant ID':<20} {'Name':<40} {'Rerank Score':<15} {'Distance (km)':<15}")
-        self.logger.info("-" * 96)
+        self.logger.info(f"{'Rank':<6} {'Entity ID':<20} {'Name':<40} {'Rerank Score':<15}")
+        self.logger.info("-" * 80)
         for idx, result in enumerate(reranked, 1):
-            restaurant_id = result.entity.restaurant_id
+            entity_id = getattr(result.entity, "restaurant_id", getattr(result.entity, "food_id", "unknown"))
             name = result.entity.name
             rerank_score = getattr(result, "rerank_score", 0)
-            distance_km = result.distance_km
-            self.logger.info(f"{idx:<6} {restaurant_id:<20} {name:<40} {rerank_score:<15.4f} {distance_km:<15.2f}")
+            self.logger.info(f"{idx:<6} {entity_id:<20} {name:<40} {rerank_score:<15.4f}")
         self.logger.info("")
 
         # ===== PIPELINE END =====
