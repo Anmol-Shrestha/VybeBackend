@@ -1,20 +1,20 @@
 FROM python:3.11-slim
-
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+# Pull uv natively from the official image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Copy Pipfile and install dependencies
-COPY Pipfile Pipfile.lock ./
-RUN pip install --no-cache-dir pipenv && pipenv install --deploy --ignore-pipfile
+# Set the system PATH for our virtual environment binaries
+ENV PATH="/app/.venv/bin:$PATH"
 
-# Copy application code
+# Copy lockfiles
+COPY pyproject.toml uv.lock ./
+
+# ⚡ Force uv to use pre-compiled wheels and skip raw C-compilation
+RUN uv sync --frozen --no-build
+
+# Copy clean architecture layers
 COPY . .
 
-# Expose port
 EXPOSE 8000
-
-# Run the application
-CMD ["pipenv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
