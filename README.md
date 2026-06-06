@@ -169,13 +169,43 @@ uv run pytest test/test_restaurant_service.py::test_search_with_geospatial_filte
 
 ## Observability Dashboard
 
-### Local Development
+### Local Development Setup
 
-Phoenix runs in the background when you start the backend:
+**Choose one of these options:**
+
+**Option A: Run Phoenix as Separate Service (Recommended)**
 ```bash
+# Terminal 1: Install and run Phoenix
+pip install arize-phoenix
+phoenix
+# Phoenix available at: http://localhost:6006
+
+# Terminal 2: Start backend (connects to Phoenix automatically)
 cd backend
 uv run uvicorn app.main:app --reload
-# Phoenix UI automatically available at: http://localhost:6006
+```
+
+**Option B: Run Phoenix as Docker Container**
+```bash
+# Terminal 1: Start Phoenix container
+docker run -d -p 6006:6006 arizephoenix/phoenix:latest
+# Phoenix available at: http://localhost:6006
+
+# Terminal 2: Start backend
+cd backend
+uv run uvicorn app.main:app --reload
+```
+
+**Option C: Embedded Phoenix (Simpler, Single Terminal)**
+```bash
+# Edit backend/app/observability/setup.py and uncomment line 27:
+# Change: # px.launch_app()
+# To: px.launch_app()
+
+# Then start backend (Phoenix launches automatically)
+cd backend
+uv run uvicorn app.main:app --reload
+# Phoenix available at: http://localhost:6006
 ```
 
 **Dashboard shows:**
@@ -187,13 +217,13 @@ uv run uvicorn app.main:app --reload
 
 ### Production Deployment (Docker)
 
-Phoenix runs as a separate Docker service:
+Phoenix runs as a separate Docker service in docker-compose:
 ```bash
 docker-compose up
 # Phoenix available at: http://localhost:6006
 ```
 
-Configuration:
+Configuration in docker-compose.yml:
 - Container: `arizephoenix/phoenix:latest`
 - Port: `6006:6006`
 - Backend connects via: `PHOENIX_COLLECTOR_ENDPOINT=http://phoenix-observability:6006/v1/traces`
