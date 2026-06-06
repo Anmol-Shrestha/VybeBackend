@@ -3,7 +3,7 @@
 A full-stack restaurant and food search application with semantic search, MCP integration, and real-time observability.
 
 **Tech Stack:**
-- Backend: FastAPI (Python 3.11+) + Motor (async MongoDB)
+- Backend: FastAPI (Python 3.11+) + pymongo (async MongoDB)
 - Frontend: React + Vite + Tailwind CSS
 - Search: OpenAI embeddings (1536-dim) + MongoDB vector search + BAAI reranker
 - Observability: Arize Phoenix + OpenTelemetry
@@ -160,10 +160,9 @@ uv run pytest test/test_restaurant_service.py::test_search_with_geospatial_filte
 | Test File | Purpose |
 |-----------|---------|
 | `test_restaurant_service.py` | RestaurantService with geospatial filtering and ranking |
+| `test_restaurant_eval.py` | RestaurantHybridSearchService semantic search with allergen safety |
 | `test_food_hybrid_search_eval.py` | FoodHybridSearchService semantic search with allergen safety |
-| `test_hybrid_search_service.py` | Generic HybridSearchService with embeddings and reranking |
 | `test_vector_similarity.py` | Embedding quality and cosine similarity validation |
-| `test_crewai_agents.py` | CrewAI agent orchestration tests |
 | `conftest.py` | Pytest fixtures and MongoDB async setup |
 
 ---
@@ -271,7 +270,7 @@ curl -X POST "http://localhost:8000/api/v1/restaurants/vector-search" \
 
 ### Backend Stack
 - **Framework:** FastAPI + Uvicorn
-- **Database:** Motor (async MongoDB driver)
+- **Database:** PyMongo AsyncMongoClient (async MongoDB driver)
 - **Search:** OpenAI embeddings + MongoDB vector search
 - **Reranking:** BAAI/bge-reranker-base
 - **Testing:** Pytest + async fixtures
@@ -286,24 +285,62 @@ curl -X POST "http://localhost:8000/api/v1/restaurants/vector-search" \
 
 ### Data Flow
 
+🗺️ The Unified Master Data Flow
+
+
+Phase 1: The AI Handshake & Intent Extraction
+This phase is all about the Frontend mediating between the LLM and your tool definitions to figure out what the user wants to do.
+
 ```
-User Query
-    ↓
-Frontend (React)
-    ↓
-MCP Client → MCP Server (vybesix-mcp)
-    ↓
-FastAPI Backend API
-    ↓
-Repository Layer → MongoDB Vector Search
-    ↓
-Reranker (BAAI/bge-reranker-base)
-    ↓
-Results → Phoenix Observability Dashboard
-    ↓
-Frontend Display
+User Type Query (e.g., "Cozy late-night dessert without soy")
+    │
+    ▼
+Frontend (MCP Client) Already Knows Available Tools (Pre-fetched from vybesix-mcp)
+    │
+    ▼
+Frontend packages [User Query + Tool Schemas] and sends to LLM (Claude API)
+    │
+    ▼
+LLM reads them, picks a tool, and returns structural intent: "Run 'search_food' with filters"
+    │
+    ▼
+Frontend (MCP Client) receives this instruction and invokes your tool endpoint
 ```
 
+
+Phase 2: The Core Database & RAG Execution
+This is your domain—the deterministic engineering backend where search safety, database indexes, and machine learning models calculate the math.
+
+```
+MCP Server (vybesix-mcp) receives the network call and triggers your internal API route
+    │
+    ▼
+FastAPI Backend Endpoint gets hit with the extracted parameters
+    │
+    ▼
+Repository Layer builds the dynamic query and runs MongoDB Vector Search (with strict safety Pre-Filters)
+    │
+    ▼
+Cross-Encoder Reranker (BAAI/bge-reranker-base) scores the safe candidates for exact semantic relevance
+```
+
+
+
+Phase 3: Telemetry, Return, & Display
+The final leg where data is tracked for quality assurance, shipped back up the pipe, and painted on the user's screen.
+
+```
+FastAPI packages the beautifully ranked food items
+    │
+    ▼
+OpenTelemetry background exporter streams the trace spans to the Phoenix Observability Dashboard
+    │
+    ▼
+Clean Search Results return to the MCP Server ──> back to the Frontend (MCP Client)
+    │
+    ▼
+Frontend Display renders the perfect, safe culinary match on the user's screen!
+```
 ---
 
 ## Database Seeding
@@ -340,13 +377,14 @@ See **Deployment.md** for:
 
 ## Troubleshooting
 
+
 **Backend won't start:**
 ```bash
 # Check dependencies installed
 uv sync
 
 # Check MongoDB connection
-python -c "import motor; print('Motor OK')"
+cd backend && uv run python scripts/check_mongo_connection.py
 
 # Check OpenAI key
 echo $OPENAI_API_KEY
