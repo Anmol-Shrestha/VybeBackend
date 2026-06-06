@@ -176,7 +176,7 @@ uv run pytest test/test_restaurant_service.py::test_search_with_geospatial_filte
 **Option A: Run Phoenix as Separate Service (Recommended)**
 ```bash
 # Terminal 1: Install and run Phoenix
-pip install arize-phoenix
+uv pip install arize-phoenix
 phoenix
 # Phoenix available at: http://localhost:6006
 
