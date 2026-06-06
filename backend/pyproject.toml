@@ -1,0 +1,29 @@
+[project]
+name = "vybe-backend"
+version = "0.1.0"
+description = "VYBE Restaurant Discovery Service"
+requires-python = ">=3.12"
+authors = [{name = "VYBE Team", email = "anmolsagarshrestha@gmail.com"}]
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "pymongo",
+    "python-dotenv",
+    "numpy<2",
+    "openai",
+    "sentence-transformers",
+    # observability
+    "arize-phoenix>=4.0.0",
+    "opentelemetry-sdk",
+    "opentelemetry-exporter-otlp-proto-grpc",
+    "opentelemetry-instrumentation-fastapi",
+    "opentelemetry-instrumentation-openai",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+]

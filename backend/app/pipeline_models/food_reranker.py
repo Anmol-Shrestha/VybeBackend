@@ -2,6 +2,7 @@ import asyncio
 from sentence_transformers import CrossEncoder
 from app.pipeline_models.reranker_adapter import RerankerAdapter
 from app.utils.logger import get_search_logger, log_subsection
+from app.observability.tracer import tracer
 
 
 class FoodReranker(RerankerAdapter):
@@ -48,7 +49,10 @@ class FoodReranker(RerankerAdapter):
         self.logger.info("")
 
         pairs = [[query, text] for text in candidate_texts]
-        scores = await asyncio.to_thread(self.model.predict, pairs)
+        with tracer.start_as_current_span("food_reranker.cross_encoder_predict") as span:
+            span.set_attribute("reranker.model_name", self.model_name)
+            span.set_attribute("pairs.count", len(pairs))
+            scores = await asyncio.to_thread(self.model.predict, pairs)
 
         log_subsection(self.logger, "RE-RANKER: SCORES ASSIGNED")
         for candidate, score in zip(candidates, scores):

@@ -13,6 +13,7 @@ from typing import List
 import logging
 from app.services.hybrid_search_service import HybridSearchService
 from app.model.food.models import FoodSearchResponse, FoodSearchResult
+from app.observability.tracer import tracer
 
 logger = logging.getLogger(__name__)
 
@@ -82,63 +83,101 @@ class FoodHybridSearchService:
         """
         allergens_to_exclude = allergens_to_exclude or []
 
-        self.logger.info(
-            f"🍽️  Food Hybrid Search: query='{query}', "
-            f"restaurants={len(restaurant_ids)}, limit={limit}"
-        )
-        if allergens_to_exclude:
-            self.logger.info(f"⚠️  Allergen Safety: excluding {allergens_to_exclude}")
+        with tracer.start_as_current_span("food_hybrid_search.search") as span:
+            # Input attributes
+            span.set_attribute("query", query)
+            span.set_attribute("query.length", len(query))
+            span.set_attribute("restaurant_ids.count", len(restaurant_ids))
+            span.set_attribute("limit", limit)
+            span.set_attribute("num_candidates", num_candidates)
+            span.set_attribute("allergens.count", len(allergens_to_exclude))
 
-        # ===== HYBRID SEARCH PIPELINE =====
-        # 1. Embedding: OpenAI text-embedding-3-small (1536 dims)
-        # 2. Vector Search: MongoDB $vectorSearch with hard allergen filtering
-        # 3. Reranking: Cross-encoder for precision
-        food_results = await self.hybrid_search.search(
-            query=query,
-            entity_ids=restaurant_ids,
-            limit=num_candidates,
-            num_candidates=num_candidates,
-            allergens_to_exclude=allergens_to_exclude,
-        )
-
-        self.logger.info(f"📊 Pipeline returned {len(food_results)} candidates")
-
-        # ===== RESULT CONVERSION & FILTERING =====
-        responses = []
-        for result in food_results:
-            # Type cast result to FoodSearchResult
-            if not isinstance(result, FoodSearchResult):
-                # If it's coming as dict, wrap it
-                continue
-
-            # Extract rerank score (added by reranker in pipeline)
-            rerank_score = getattr(result, 'rerank_score', None) or 0.0
-
-            # Filter by quality threshold
-            if rerank_score < self.rerank_score_threshold:
-                self.logger.debug(
-                    f"⏭️  Skipping {result.entity.name} "
-                    f"(score {rerank_score:.4f} < threshold {self.rerank_score_threshold})"
-                )
-                continue
-
-            # Convert FoodSearchResult → FoodSearchResponse
-            response = FoodSearchResponse.from_entity(
-                entity=result.entity,
-                match_score=result.match_score,  # Vector similarity score
-                rerank_score=rerank_score  # Cross-encoder rerank score
+            # Log input query as event
+            span.add_event(
+                "search_input",
+                attributes={
+                    "query": query,
+                    "restaurants_searched": len(restaurant_ids),
+                    "allergens_excluded": ", ".join(allergens_to_exclude) if allergens_to_exclude else "none",
+                }
             )
-            responses.append(response)
 
-        # Apply limit to final results
-        responses = responses[:limit]
+            self.logger.info(
+                f"🍽️  Food Hybrid Search: query='{query}', "
+                f"restaurants={len(restaurant_ids)}, limit={limit}"
+            )
+            if allergens_to_exclude:
+                self.logger.info(f"⚠️  Allergen Safety: excluding {allergens_to_exclude}")
 
-        self.logger.info(
-            f"✅ Food search complete: {len(responses)} items "
-            f"(after threshold filtering and limiting to {limit})"
-        )
+            # ===== HYBRID SEARCH PIPELINE =====
+            # 1. Embedding: OpenAI text-embedding-3-small (1536 dims)
+            # 2. Vector Search: MongoDB $vectorSearch with hard allergen filtering
+            # 3. Reranking: Cross-encoder for precision
+            food_results = await self.hybrid_search.search(
+                query=query,
+                entity_ids=restaurant_ids,
+                limit=num_candidates,
+                num_candidates=num_candidates,
+                allergens_to_exclude=allergens_to_exclude,
+            )
 
-        return responses
+            self.logger.info(f"📊 Pipeline returned {len(food_results)} candidates")
+            span.set_attribute("candidates.returned", len(food_results))
+
+            # ===== RESULT CONVERSION & FILTERING =====
+            responses = []
+            for result in food_results:
+                # Type cast result to FoodSearchResult
+                if not isinstance(result, FoodSearchResult):
+                    # If it's coming as dict, wrap it
+                    continue
+
+                # Extract rerank score (added by reranker in pipeline)
+                rerank_score = getattr(result, 'rerank_score', None) or 0.0
+
+                # Filter by quality threshold
+                if rerank_score < self.rerank_score_threshold:
+                    self.logger.debug(
+                        f"⏭️  Skipping {result.entity.name} "
+                        f"(score {rerank_score:.4f} < threshold {self.rerank_score_threshold})"
+                    )
+                    continue
+
+                # Convert FoodSearchResult → FoodSearchResponse
+                response = FoodSearchResponse.from_entity(
+                    entity=result.entity,
+                    match_score=result.match_score,  # Vector similarity score
+                    rerank_score=rerank_score  # Cross-encoder rerank score
+                )
+                responses.append(response)
+
+            # Apply limit to final results
+            responses = responses[:limit]
+
+            span.set_attribute("results.after_threshold_filter", len(responses))
+            span.set_attribute("rerank_threshold", self.rerank_score_threshold)
+            span.set_attribute("results.final_count", len(responses))
+
+            # Log final results as span events
+            for idx, response in enumerate(responses, 1):
+                span.add_event(
+                    "final_result",
+                    attributes={
+                        "rank": idx,
+                        "food_id": response.food_id,
+                        "name": response.name,
+                        "restaurant_id": response.restaurant_id,
+                        "match_score": float(response.match_score) if response.match_score else 0.0,
+                        "rerank_score": float(response.rerank_score) if response.rerank_score else 0.0,
+                    }
+                )
+
+            self.logger.info(
+                f"✅ Food search complete: {len(responses)} items "
+                f"(after threshold filtering and limiting to {limit})"
+            )
+
+            return responses
 
     # ========================================================================
     # CONFIGURATION & UTILITIES

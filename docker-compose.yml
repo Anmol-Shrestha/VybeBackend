@@ -4,11 +4,53 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    env_file:
-      - ./backend/.env
-    volumes:
-      - ./backend:/app
-    command: pipenv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      - "6006:6006"
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+      - DATABASE_NAME=vybe
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    networks:
+      - vybe-network
+
+  mcp-server:
+    build:
+      context: ./vybesix-mcp
+    ports:
+      - "5000:5000"
+    environment:
+      - BACKEND_API_URL=http://backend:8000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - vybe-network
+
+  agents:
+    build:
+      context: ./agents
+    ports:
+      - "8080:8080"
+    environment:
+      - MCP_SERVER_URL=http://mcp-server:5000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - mcp-server
+    networks:
+      - vybe-network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - vybe-network
+
+networks:
+  vybe-network:
+    driver: bridge

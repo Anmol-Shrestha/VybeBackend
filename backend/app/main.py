@@ -9,8 +9,12 @@ from dotenv import load_dotenv
 
 from app.repositories.mongo_restaurant_repo import MongoRestaurantRepository
 from app.repositories.mongo_user_repo import MongoUserRepository
+from app.repositories.mongo_food_repo import MongoFoodRepository
 from app.services.restaurant_service import RestaurantService
+from app.services.food_service import FoodService
 from app.api.v1.restaurants import router as v1_restaurants_router
+from app.api.v1.food import router as v1_food_router
+from app.observability.setup import setup_phoenix
 
 load_dotenv()
 
@@ -19,7 +23,10 @@ load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Initialize MongoDB client and repositories
+    # Startup: Initialize observability first
+    setup_phoenix(app)
+
+    # Then initialize MongoDB client and repositories
     mongodb_url = os.getenv("MONGODB_URL")
     db_name = os.getenv("DATABASE_NAME", "vybe")
 
@@ -30,10 +37,12 @@ async def lifespan(app: FastAPI):
     app.database = app.mongodb_client[db_name]
     app.restaurant_repo = MongoRestaurantRepository(app.database["restaurants"])
     app.user_repo = MongoUserRepository(app.database["users"])
+    app.food_repo = MongoFoodRepository(app.database["food"])
     app.restaurant_service = RestaurantService(
         app.restaurant_repo,
         app.user_repo
     )
+    app.food_service = FoodService(app.food_repo)
 
     print("✅ Application startup: MongoDB connected, repositories initialized")
 
@@ -64,6 +73,7 @@ app.add_middleware(
 
 # Include V1 API routers
 app.include_router(v1_restaurants_router)
+app.include_router(v1_food_router)
 
 
 @app.get("/health")

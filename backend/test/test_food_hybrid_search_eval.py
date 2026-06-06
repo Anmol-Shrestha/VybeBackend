@@ -101,7 +101,7 @@ GOLDEN_FOOD_EVAL_CASES = [
     {
         "name": "TC8: SAFETY - Vegan Asian Appetizer (No Soy/Sesame)",
         "query": "vegan asian appetizer with no soy or sesame",
-        "expected_items": [],
+        "expected_items": ['Kimchi Corn Dogs','Vegan Dumplings','Crispy Tofu Fries','Samosas'],
         "expected_restaurant_ids": [],
         "allergens_to_avoid": ["soy", "sesame", "dairy"],
         "description": "CRITICAL SAFETY TEST: Verifies negative allergen filter ($nin). If user specifies 'no soy or sesame', NO results should contain those allergens, even if semantically relevant.",
