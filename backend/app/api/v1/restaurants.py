@@ -57,7 +57,7 @@ async def search_restaurants_manual(
     - meal_types (optional): List of meal types (e.g., ["breakfast", "lunch"])
     - cuisine (optional): List of cuisines (e.g., ["italian", "vegan"])
     - dietary (optional): Dietary restrictions (e.g., ["vegan"])
-    - price_max (optional): Maximum price level (1-4)
+    - price_max (optional): Maximum price in dollars, e.g. 25.0
     - min_rating (optional): Minimum rating (default: 0.0)
     - min_capacity (optional): Minimum capacity (default: 1)
     - has_parking (optional): Must have parking
