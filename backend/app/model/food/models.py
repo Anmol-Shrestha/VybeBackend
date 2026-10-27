@@ -137,7 +137,7 @@ class FoodSearchRequest(BaseModel):
     meal_types: List[str] = Field(default_factory=list)
 
     # Optional Preferences
-    price: Optional[int] = None
+    price: Optional[float] = None  # maximum price in dollars
     spice_level: Optional[int] = None  # Exact or minimum level
     max_prep_time: Optional[int] = None  # Maximum preparation time in minutes
 

@@ -18,7 +18,7 @@ class RestaurantSearchRequest(BaseModel):
     meal_types: list[str] = Field(default_factory=list)
     cuisine: list[str] = Field(default_factory=list)
     dietary: list[str] = Field(default_factory=list)
-    price_max: int | None = None
+    price_max: float | None = None
     min_rating: float = 0.0
     min_capacity: int = 1
     has_live_music: bool = False
@@ -42,7 +42,7 @@ class FoodSearchRequest(BaseModel):
     category: str = None
     cuisine: list[str] = None
     meal_types: list[str] = None
-    price: int = None
+    price: float = None
     spice_level: int = None
     max_prep_time: int = None
     limit: int = 10
@@ -70,7 +70,7 @@ async def search_restaurants_manual(
     meal_types: list[str] = None,
     cuisine: list[str] = None,
     dietary: list[str] = None,
-    price_max: int = None,
+    price_max: float = None,
     min_rating: float = 0.0,
     min_capacity: int = 1,
     has_parking: bool = False,
@@ -89,7 +89,7 @@ async def search_restaurants_manual(
         meal_types: List of meal types (e.g., breakfast, lunch, dinner)
         cuisine: List of cuisines (e.g., italian, vegan, mexican)
         dietary: Dietary restrictions (e.g., vegan, gluten-free, halal)
-        price_max: Maximum price level (1-4)
+        price_max: Maximum price in dollars (e.g. 25.0)
         min_rating: Minimum rating (0-5, default: 0.0)
         min_capacity: Minimum seating capacity (default: 1)
         has_parking: Must have parking (default: false)
@@ -209,7 +209,7 @@ async def search_food_manual(
     category: str = None,
     cuisine: list[str] = None,
     meal_types: list[str] = None,
-    price: int = None,
+    price: float = None,
     spice_level: int = None,
     max_prep_time: int = None,
     limit: int = 10,
@@ -228,7 +228,7 @@ async def search_food_manual(
         category: Food category (e.g., "main_course", "dessert")
         cuisine: Cuisine types (e.g., ["asian", "italian"])
         meal_types: Meal types (e.g., ["breakfast", "dinner"])
-        price: Maximum price level
+        price: Maximum price in dollars
         spice_level: Spice level (0-5)
         max_prep_time: Maximum preparation time in minutes
         limit: Results per page (default: 10)
@@ -344,3 +344,7 @@ async def search_food_vector(
             "success": False,
             "error": f"Validation or request error: {str(e)}"
         })
+
+
+if __name__ == "__main__":
+    mcp.run()

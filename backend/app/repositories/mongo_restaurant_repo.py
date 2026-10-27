@@ -11,17 +11,17 @@ class MongoRestaurantRepository(RestaurantRepository):
 
     async def filter_restaurants(self, criteria: dict, bypass_hours: bool = False) -> list[RestaurantSearchResult]:
         """
-        Executes the 5-stage aggregation pipeline:
-        1. $geoNear: Proximity filter with dietary query
-        2. $match: Strict dietary re-check
-        3. $addFields: Compute match_score (parking + live music)
-        4. $match: Temporal/service hours check (skipped if bypass_hours=True)
-        5. $sort + $limit: Score DESC, distance ASC, limit 20
+        Executes the filter-only aggregation pipeline:
+        1. $geoNear: Proximity filter with dietary, price and amenity query
+        2. $match: Strict dietary, price and amenity re-check
+        3. $match: Temporal/service hours check (skipped if bypass_hours=True)
+        4. $sort + $limit: Distance ASC, limit 20
         """
         latitude = criteria.get("latitude", 0)
         longitude = criteria.get("longitude", 0)
         radius_km = criteria.get("radius_km", 5)
         dietary = criteria.get("dietary", [])
+        price_max = criteria.get("price_max")  # dollars; restaurant price_max must be <= this
         has_parking = criteria.get("has_parking", False)
         has_live_music = criteria.get("has_live_music", False)
 
@@ -30,8 +30,19 @@ class MongoRestaurantRepository(RestaurantRepository):
         day_name = now.strftime("%A")
         current_minutes = now.hour * 60 + now.minute
 
+        # Strict filters shared by $geoNear (perf) and $match (exact)
+        match_filter = {}
+        if dietary:
+            match_filter["dietary"] = {"$in": dietary}
+        if price_max is not None:
+            match_filter["price_max"] = {"$lte": price_max}
+        if has_parking:
+            match_filter["has_parking"] = True
+        if has_live_music:
+            match_filter["has_live_music"] = True
+
         pipeline = [
-            # Stage 1: $geoNear — proximity filter with dietary query for perf
+            # Stage 1: $geoNear — proximity filter with dietary and price query for perf
             {
                 "$geoNear": {
                     "near": {
@@ -42,40 +53,13 @@ class MongoRestaurantRepository(RestaurantRepository):
                     "distanceMultiplier": 0.001,
                     "maxDistance": radius_km * 1000,  # Convert km to meters
                     "spherical": True,
-                    "query": {"dietary": {"$in": dietary}} if dietary else {}
+                    "query": match_filter
                 }
             },
 
-            # Stage 2: $match — strict dietary re-check
-            {
-                "$match": {
-                    "dietary": {"$in": dietary}
-                } if dietary else {}
-            } if dietary else {"$match": {}},
+            # Stage 2: $match — strict dietary and price re-check
+            {"$match": match_filter},
 
-            # Stage 3: $addFields — compute match_score
-            {
-                "$addFields": {
-                    "match_score": {
-                        "$add": [
-                            {
-                                "$cond": [
-                                    {"$eq": ["$has_parking", has_parking]},
-                                    1,
-                                    0
-                                ]
-                            },
-                            {
-                                "$cond": [
-                                    {"$eq": ["$has_live_music", has_live_music]},
-                                    1,
-                                    0
-                                ]
-                            }
-                        ]
-                    }
-                }
-            },
         ]
 
         # Stage 4: $match — temporal/service hours check (optional, can be bypassed)
@@ -121,7 +105,6 @@ class MongoRestaurantRepository(RestaurantRepository):
         pipeline.extend([
             {
                 "$sort": {
-                    "match_score": -1,  # DESC
                     "distance_km": 1    # ASC
                 }
             },

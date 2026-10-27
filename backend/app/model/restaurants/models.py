@@ -60,7 +60,7 @@ class RestaurantSearchRequest(BaseModel):
     dietary: List[str] = []
 
     # Optional Preferences
-    price_max: Optional[int] = None
+    price_max: Optional[float] = None  # maximum price in dollars
     min_rating: float = 0.0
     min_capacity: int = 1
 

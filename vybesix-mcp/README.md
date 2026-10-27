@@ -37,7 +37,7 @@ Structured search using location and preferences.
 - `meal_types`: List of meal types (breakfast, lunch, dinner)
 - `cuisine`: List of cuisines (italian, vegan, mexican, etc.)
 - `dietary`: Dietary restrictions (vegan, gluten-free, halal, kosher)
-- `price_max`: Maximum price level (1-4)
+- `price_max`: Maximum price in dollars (e.g. 25.0)
 - `min_rating`: Minimum rating (0-5, default: 0.0)
 - `min_capacity`: Minimum seating capacity (default: 1)
 - `has_parking`: Must have parking (default: false)

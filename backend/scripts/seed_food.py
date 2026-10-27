@@ -252,6 +252,10 @@ async def seed_food(collection) -> list | None:
                     {
                         "type": "filter",
                         "path": "restaurant_id"
+                    },
+                    {
+                        "type": "filter",
+                        "path": "allergens"
                     }
                 ]
             },

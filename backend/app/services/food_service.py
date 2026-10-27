@@ -49,7 +49,7 @@ class FoodService:
         - cuisine: Cuisine types (asian, italian, indian, etc.)
         - meal_types: Meal types (breakfast, lunch, dinner, late night)
         - spice_level: Spice level (0-5)
-        - price: Maximum price
+        - price: Maximum price in dollars
         - max_prep_time: Maximum prep time in minutes
         - query: Keyword search in name/description
 

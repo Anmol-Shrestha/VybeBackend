@@ -31,7 +31,7 @@ class RestaurantService:
             bypass_hours: If True, skips stage 4 (temporal/service hours check) in aggregation pipeline.
                          Useful for testing. Defaults to False.
 
-        Returns list of RestaurantsSearchResponse sorted by match_score and distance.
+        Returns list of RestaurantsSearchResponse filtered by the request and sorted by distance.
         """
         filters = request.model_dump()
 
